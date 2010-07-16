@@ -1,0 +1,12 @@
+# Blender3D v244 OBJ File: pista7.blend
+# www.blender3d.org
+mtllib startCheckPoint.mtl
+o Plane.001
+v -9.948664 0.110983 35.694466
+v 12.270184 0.110983 35.931053
+v 12.268854 0.021013 35.933636
+v -9.949993 0.021013 35.697044
+usemtl (null)
+usemtl (null)
+s 1
+f 1 4 3 2

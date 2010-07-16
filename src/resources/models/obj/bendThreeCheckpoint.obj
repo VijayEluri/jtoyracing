@@ -1,0 +1,12 @@
+# Blender3D v244 OBJ File: pista7.blend
+# www.blender3d.org
+mtllib bendThreeCheckpoint.mtl
+o Plane
+v 194.039963 0.110983 59.646317
+v 221.620102 0.110983 60.561954
+v 221.618774 0.021013 60.564537
+v 194.038635 0.021013 59.648895
+usemtl (null)
+usemtl (null)
+s 1
+f 1 4 3 2
