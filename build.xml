@@ -6,6 +6,7 @@
 	<property name="dist-linux" value="${basedir}/dist/linux"/>
 	<property name="dist-windows" value="${basedir}/dist/windows"/>
 	<property name="lib" value="${basedir}/lib"/>
+	<property name="version" value="0.1"/>
 	
 	<path id="project-classpath">
 		<fileset dir="${lib}" includes="*.jar" />
@@ -70,22 +71,26 @@
 	<!-- target linux dist -->
 	<target name="dist_linux" depends="init_linux, compile">
 		<echo>Creating jar for linux.</echo>
-		<jar jarfile="${dist-linux}/JToyRacingLinux.jar" basedir="${build}">
+		<jar jarfile="${dist-linux}/JToyRacingLinux-${version}.jar" basedir="${build}">
 			<manifest>
 				<attribute name="Main-Class" value="net.juniorbl.jtoyracing.core.JToyRacing"/>
 				<attribute name="Class-Path" value="./lib/jme-physics-all.jar ./lib/jme-gamestates.jar ./lib/lwjgl_applet.jar ./lib/jorbis-0.0.15.jar ./lib/lwjgl_fmod3.jar ./lib/odejava-jni.jar ./lib/jme-scene.jar ./lib/jogg-0.0.7.jar ./lib/jinput.jar ./lib/jme.jar lib/jme-audio.jar ./lib/jme-awt.jar ./lib/jme-font.jar ./lib/jme-collada.jar ./lib/jme-editors.jar ./lib/jme-effects.jar ./lib/jme-model.jar ./lib/jme-sound.jar ./lib/jme-terrain.jar ./lib/lwjgl.jar ./lib/lwjgl_test.jar ./lib/lwjgl_util.jar ./lib/lwjgl_util_applet.jar"/>
 			</manifest>
+			<fileset dir="${resources}"/>
+			<exclude name=".gitignore" />
 		</jar>
 	</target>
 	<!-- target windows dist -->
 	<target name="dist_windows" depends="init_windows, compile">
 		<echo>Creating jar for windows.</echo>
-		<jar jarfile="${dist-windows}/JToyRacingWindows.jar" basedir="${build}">
+		<jar jarfile="${dist-windows}/JToyRacingWindows-${version}.jar" basedir="${build}">
 			<includesfile />
 			<manifest>
 				<attribute name="Main-Class" value="net.juniorbl.jtoyracing.core.JToyRacing"/>
 				<attribute name="Class-Path" value="./lib/jme-physics-all.jar ./lib/jme-gamestates.jar ./lib/lwjgl_applet.jar ./lib/jorbis-0.0.15.jar ./lib/lwjgl_fmod3.jar ./lib/odejava-jni.jar ./lib/jme-scene.jar ./lib/jogg-0.0.7.jar ./lib/jinput.jar ./lib/jme.jar lib/jme-audio.jar ./lib/jme-awt.jar ./lib/jme-font.jar ./lib/jme-collada.jar ./lib/jme-editors.jar ./lib/jme-effects.jar ./lib/jme-model.jar ./lib/jme-sound.jar ./lib/jme-terrain.jar ./lib/lwjgl.jar ./lib/lwjgl_test.jar ./lib/lwjgl_util.jar ./lib/lwjgl_util_applet.jar"/>
 			</manifest>
+			<fileset dir="${resources}"/>
+			<exclude name=".gitignore" />
 		</jar>
 	</target>
 </project>

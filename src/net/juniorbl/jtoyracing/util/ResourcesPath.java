@@ -17,7 +17,7 @@ public enum ResourcesPath {
 		 */
 		@Override
 		public String toString() {
-			return "resources/models/";
+			return "models/";
 		}
 	},
 	
@@ -30,7 +30,7 @@ public enum ResourcesPath {
 		 */
 		@Override
 		public String toString() {
-			return "resources/audio/";
+			return "audio/";
 		}
 	},
 	
@@ -43,7 +43,7 @@ public enum ResourcesPath {
 		 */
 		@Override
 		public String toString() {
-			return "resources/images/";
+			return "images/";
 		}
 	},
 	
@@ -56,7 +56,7 @@ public enum ResourcesPath {
 		 */
 		@Override
 		public String toString() {
-			return "resources/textures/";
+			return "textures/";
 		}
 	}
 }
