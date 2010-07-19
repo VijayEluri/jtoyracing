@@ -2,7 +2,7 @@
 <project name="JToyRacing" default="dist_linux" basedir=".">
 	<property name="src" value="${basedir}/src"/>
 	<property name="resources" value="${basedir}/src/resources"/>
-	<property name="build" value="${basedir}/classes"/>
+	<property name="build" value="${basedir}/bin"/>
 	<property name="dist-linux" value="${basedir}/dist/linux"/>
 	<property name="dist-windows" value="${basedir}/dist/windows"/>
 	<property name="lib" value="${basedir}/lib"/>
