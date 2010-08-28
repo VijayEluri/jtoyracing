@@ -5,12 +5,12 @@ import com.jmex.physics.StaticPhysicsNode;
 
 /**
  * Implementation of StaticPhysicsNode for unit tests.
- * 
+ *
  * @version 1.0 Jun 21, 2008
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public final class StaticPhysicsNodeImpl extends StaticPhysicsNode {
-	
+
 	/**
 	 * serialVersionUID.
 	 */

@@ -16,7 +16,7 @@ import static net.juniorbl.jtoyracing.entity.vehicle.Wheel.RIGHT_WHEEL_SIDE;
  * Suspension of a car.
  *
  * @version 1.0 Sep 3, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Suspension extends Node {
 

@@ -8,7 +8,7 @@ import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
  * Traction of a car. It's responsible for the forward and backward movement.
  *
  * @version 1.0 Sep 7, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Traction implements InputActionInterface {
 

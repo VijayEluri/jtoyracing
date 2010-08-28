@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Camera that follows a vehicle.
  *
  * @version 1.0 Jun 22, 2008
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public final class VehicleChaseCamera extends ChaseCamera {
 

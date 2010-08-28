@@ -8,20 +8,20 @@ import com.jmex.audio.AudioTrack;
  * Audio configuration of the game.
  *
  * @version 1.0 Jan 02, 2008
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public final class AudioConfig {
 
 	/**
 	 * Volume of the sound effect.
 	 */
-	private final static float SOUND_EFFECT_VOLUME = 0.1f;
+	private static final float SOUND_EFFECT_VOLUME = 0.1f;
 
     /**
      * The audio system of the game.
      */
 	private AudioSystem audioSystem;
-	
+
 	/**
 	 * Constructs a audio configuration.
 	 *
@@ -33,7 +33,7 @@ public final class AudioConfig {
 
 	/**
 	 * Loads a sound effect. Sound effects are around in the scene.
-	 * 
+	 *
 	 * @param effectPath path of the sound effect.
 	 * @return sound effect loaded.
 	 */

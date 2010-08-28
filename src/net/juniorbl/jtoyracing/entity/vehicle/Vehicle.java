@@ -20,7 +20,7 @@ import com.jmex.physics.material.Material;
  * A vehicle of the game. May be a superclass of various kids of vehicles in the future.
  *
  * @version 1.0 Aug 11, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Vehicle extends Node implements Health {
 
@@ -33,7 +33,7 @@ public class Vehicle extends Node implements Health {
 	 * serialVersionUID.
 	 */
 	private static final long serialVersionUID = 2049305191562715341L;
-	
+
 	/**
 	 * Amount of health that is decreased.
 	 */
@@ -142,7 +142,7 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * @param velocity value of the velocity.
 	 */
-	final public void accelerate(float velocity) {
+	public final void accelerate(float velocity) {
 		if (hasHealth()) {
 			rearSuspension.accelerate(velocity);
 			frontSuspension.accelerate(velocity);
@@ -157,7 +157,7 @@ public class Vehicle extends Node implements Health {
 	/**
 	 * Stops the car.
 	 */
-	final public void stop() {
+	public final void stop() {
 		if (hasHealth()) {
 			rearSuspension.stop();
 			frontSuspension.stop();
@@ -183,7 +183,7 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * FIXME turn up the volume is not correct
 	 */
-	final public void updateEngineSound() {
+	public final void updateEngineSound() {
 		engineSound.setVolume((getSpeed() / 40) + .5f);
 	}
 
@@ -201,14 +201,14 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * @param direction the desired direction.
 	 */
-	final public void steer(float direction) {
+	public final void steer(float direction) {
 		frontSuspension.steer(direction);
 	}
 
 	/**
 	 * Unsteer the vehicle.
 	 */
-	final public void unsteer() {
+	public final void unsteer() {
 		frontSuspension.unsteer();
 	}
 
@@ -217,7 +217,7 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * @return the chassis.
 	 */
-	final public DynamicPhysicsNode getChassis() {
+	public final DynamicPhysicsNode getChassis() {
 		return this.chassis;
 	}
 
@@ -235,7 +235,7 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * @return current health.
 	 */
-	final public int getHealth() {
+	public final int getHealth() {
 		return health;
 	}
 
@@ -246,7 +246,7 @@ public class Vehicle extends Node implements Health {
 	 *
 	 * @return current health.
 	 */
-	final public int decreaseHealth() {
+	public final int decreaseHealth() {
 		health -= DECREASE_HEALTH_VALUE;
 		if (!hasHealth()) {
 			rearSuspension.stop();
@@ -263,7 +263,7 @@ public class Vehicle extends Node implements Health {
 	 * @param healthAmount amount of health.
 	 * @return current amount of health.
 	 */
-	final public int rechargeHealth(int healthAmount) {
+	public final int rechargeHealth(int healthAmount) {
 		health = healthAmount;
 		if (!engineSound.isPlaying()) {
 			engineSound.play();
@@ -282,21 +282,21 @@ public class Vehicle extends Node implements Health {
 	/**
 	 * {@inheritDoc}
 	 */
-	final public void addObserver(final HealthObserver observadorEnergia) {
+	public final void addObserver(final HealthObserver observadorEnergia) {
 		this.healthObservers.add(observadorEnergia);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	final public void removeObserver(HealthObserver observadorEnergia) {
+	public final void removeObserver(HealthObserver observadorEnergia) {
 		healthObservers.remove(observadorEnergia);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	final public void notifyObserversHealthEnded() {
+	public final void notifyObserversHealthEnded() {
 		for (HealthObserver healthObserver : this.healthObservers) {
 			healthObserver.healthEnded();
 		}

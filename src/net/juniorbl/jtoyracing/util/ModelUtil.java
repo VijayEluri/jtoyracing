@@ -16,10 +16,10 @@ import com.jmex.model.XMLparser.Converters.ObjToJme;
  * Utility class for models. Part of this code came from JMonkeyEngine documentation.
  *
  * @version 1.0 Sep 9, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
-final public class ModelUtil {
-	
+public final class ModelUtil {
+
 	/**
 	 * Prevents this class from being instantiated.
 	 */
@@ -27,7 +27,7 @@ final public class ModelUtil {
 
 	/**
 	 * Converts a OBJ model into JME model according to a given path.
-	 * 
+	 *
 	 * @param path the path.
 	 * @return the JME model converted.
 	 */
@@ -46,10 +46,10 @@ final public class ModelUtil {
 		}
 		return byteArrayOS;
 	}
-	
+
 	/**
 	 * Converts a simple OBJ model into JME model according to a given path.
-	 * 
+	 *
 	 * @param path the path.
 	 * @return the JME model converted.
 	 */
@@ -69,10 +69,10 @@ final public class ModelUtil {
 		}
 		return model;
 	}
-	
+
 	/**
 	 * Converts a multiple OBJ model into JME model according to a given path.
-	 * 
+	 *
 	 * @param path the path.
 	 * @return the JME model converted.
 	 */

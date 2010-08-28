@@ -9,7 +9,7 @@ import com.jme.input.action.InputActionInterface;
  * Responsible for handle the position of the camera.
  *
  * @version 1.0 Nov 4, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class CameraPositionHandler implements InputActionInterface {
 

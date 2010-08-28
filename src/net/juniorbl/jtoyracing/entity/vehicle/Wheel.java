@@ -17,7 +17,7 @@ import com.jmex.physics.material.Material;
  * and the floor (done by JMonkeyEngine).
  *
  * @version 1.0 Aug 23, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Wheel extends Node {
 
@@ -30,7 +30,7 @@ public class Wheel extends Node {
 	 * Constant that represents the right side of a wheel.
 	 */
 	public static final Integer RIGHT_WHEEL_SIDE = 1;
-	
+
 	/**
 	 * serialVersionUID.
 	 */

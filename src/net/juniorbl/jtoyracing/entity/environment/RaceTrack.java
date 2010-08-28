@@ -21,7 +21,7 @@ import com.jmex.physics.material.Material;
  * Place where the race happens.
  *
  * @version 1.0 Oct 2, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class RaceTrack extends Node {
 
@@ -42,7 +42,7 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Constructs a race track. It uses various states to build its components.
-	 * 
+	 *
 	 * @param physicsSpace the physicsSpace.
 	 * @param trackLocation the trackLocation.
 	 * @param alphaState the alphaState.
@@ -57,7 +57,7 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Create the track.
-	 * 
+	 *
 	 * @param physicsSpace the physicsSpace.
 	 * @param trackLocation the trackLocation.
 	 */
@@ -109,7 +109,7 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Configure the checkpoint so that there's no collision with it.
-	 * 
+	 *
 	 * @param checkPoint the checkpoint.
 	 */
 	private void configureCheckPoint(StaticPhysicsNode checkPoint) {
@@ -120,7 +120,7 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Configure the states of the checkpoints. TextureState is used along with alphastate to set them transparent.
-	 * 
+	 *
 	 * @param alphaState the alphaState.
 	 * @param textureState the textureState.
 	 */
@@ -142,7 +142,7 @@ public class RaceTrack extends Node {
 			checkPoint.setRenderState(alphaState);
 		}
 	}
-	
+
 	/**
 	 * Checks whether a vehicle reached a checkpoint.
 	 *

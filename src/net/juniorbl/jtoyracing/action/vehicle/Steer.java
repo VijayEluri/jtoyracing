@@ -8,7 +8,7 @@ import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
  * Steering action of a vehicle.
  *
  * @version 1.0 Sep 7, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Steer implements InputActionInterface {
 
@@ -36,10 +36,10 @@ public class Steer implements InputActionInterface {
 	/**
 	 * Steers the vehicle right or left.
 	 *
-	 * @param evt the event.
+	 * @param event the event.
 	 */
-	public final void performAction(InputActionEvent evt) {
-		if (evt.getTriggerPressed()) {
+	public final void performAction(InputActionEvent event) {
+		if (event.getTriggerPressed()) {
 			vehicle.steer(direction);
 		} else {
 			vehicle.unsteer();

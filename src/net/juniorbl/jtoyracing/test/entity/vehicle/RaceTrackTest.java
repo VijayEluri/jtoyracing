@@ -21,14 +21,14 @@
 //
 ///**
 // * Tests for RaceTrack.
-// * 
+// *
 // * TODO not finished yet.
-// * 
+// *
 // * @version 1.0 Jun 21, 2008
-// * @author Fco. Carlos L. Barros Junior
+// * @author Carlos Luz Junior
 // */
 //public class RaceTrackTest {
-//	
+//
 //	/**
 //	 * The location for the vehicle and track.
 //	 */
@@ -38,17 +38,17 @@
 //	 * The RaceTrack.
 //	 */
 //	private RaceTrack raceTrack;
-//	
+//
 //	/**
 //	 * PhysicsSpace necessary to construct a RaceTrack.
 //	 */
 //	private PhysicsSpace physicsSpace;
-//	
+//
 //	/**
 //	 * AlphaState necessary to construct a RaceTrack.
 //	 */
 //	private AlphaState alphaState;
-//	
+//
 //	/**
 //	 * TextureState necessary to construct a RaceTrack.
 //	 */
@@ -68,9 +68,9 @@
 //		expect(physicsSpace.createStaticNode()).andReturn(physicsNodeImpl);
 //		expectLastCall().times(3);
 //		replay(physicsSpace);
-//		
+//
 //		Mockit.redefineMethods(ModelUtil.class, ModelUtilForTest.class);
-//		
+//
 //		raceTrack = new RaceTrack(physicsSpace, TESTED_LOCATION, alphaState, textureState);
 //	}
 //

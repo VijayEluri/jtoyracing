@@ -4,7 +4,7 @@ package net.juniorbl.jtoyracing.core;
  * Chronometer that is being observed (Observer pattern).
  *
  * @version 1.0 Dec 22, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public interface Chronometer {
 

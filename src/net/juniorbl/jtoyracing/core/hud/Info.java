@@ -23,7 +23,7 @@ import com.jme.util.geom.BufferUtils;
  * Note: part of the creation of this bar was extracted from JMonkeyEngine documentation.
  *
  * @version 1.0 Oct 16, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public class Info extends Node {
 
@@ -55,22 +55,22 @@ public class Info extends Node {
 	/**
 	 * Width of the bar's border.
 	 */
-	private final static int BAR_BORDER_WIDTH = 96;
+	private static final int BAR_BORDER_WIDTH = 96;
 
 	/**
 	 * Height of the bar's border.
 	 */
-	private final static int BAR_BORDER_HEIGHT = 13;
+	private static final int BAR_BORDER_HEIGHT = 13;
 
 	/**
 	 * Width of the health bar.
 	 */
-	private final static int HEALTH_BAR_WIDTH = 94;
+	private static final int HEALTH_BAR_WIDTH = 94;
 
 	/**
 	 * Height of the health bar.
 	 */
-	private final static int HEALTH_BAR_HEIGHT = 11;
+	private static final int HEALTH_BAR_HEIGHT = 11;
 
 	/**
 	 * Location of the health symbol.
@@ -211,8 +211,7 @@ public class Info extends Node {
 	 * @param textureHeight the height of a texture.
 	 * @return the texture coordinates represented as a FloatBuffer.
 	 */
-	private FloatBuffer createTextureCoordinates(int imageWidth, int imageHeight,
-			int textureWidth, int textureHeight) {
+	private FloatBuffer createTextureCoordinates(int imageWidth, int imageHeight, int textureWidth, int textureHeight) {
 		FloatBuffer textureCoordinates = BufferUtils.createVector2Buffer(4);
 		textureCoordinates.put((float) 0 / textureWidth).put(1f - (float) 0 / textureHeight);
 		textureCoordinates.put((float) 0 / textureWidth).put(1f - (float) imageHeight / textureHeight);

@@ -7,7 +7,7 @@ import net.juniorbl.jtoyracing.action.vehicle.Traction;
 import net.juniorbl.jtoyracing.audio.AudioConfig;
 import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
 import net.juniorbl.jtoyracing.core.hud.Info;
-import net.juniorbl.jtoyracing.entity.environment.Room;
+import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
 import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
 
 import com.jme.input.InputHandler;
@@ -22,7 +22,7 @@ import com.jmex.physics.util.SimplePhysicsGame;
  * Start point of the game.
  *
  * @version 1.0 Aug 11, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public final class JToyRacing extends SimplePhysicsGame implements ChronometerObserver, HealthObserver {
 
@@ -77,7 +77,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	private static final int RECHARGE_HEALTH = 250;
 
 	/**
-	 * A camera that chave a vehicle.
+	 * A camera that chase a vehicle.
 	 */
 	private VehicleChaseCamera vehicleChaseCamera;
 
@@ -94,7 +94,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * TODO today there is only one environment, the future versions are going to have more,
 	 * like kitchen, garden and so on.
 	 */
-	private Room room;
+	private KidsRoom kidsRoom;
 
 	/**
 	 * Information displayed on the screen.
@@ -174,7 +174,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 */
 	public void updateVehiclesHealth() {
 		// When a vehicle reach a checkpoint, its health is recharged
-		if (room.isVehicleReachedCheckpoint(vehicle.getWorldBound())) {
+		if (kidsRoom.isVehicleReachedCheckpoint(vehicle.getWorldBound())) {
 			info.setHealthBarValue(vehicle.rechargeHealth(MAX_VALUE_HEALTH));
 		}
 		info.setHealthBarValue(vehicle.decreaseHealth());
@@ -184,7 +184,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * Loads the vehicles of the game.
 	 */
 	private void loadVehicles() {
-		float florHeight = room.getFloorHeight() - VEHICLE_RACE_TRACK_LOCATION;
+		float florHeight = kidsRoom.getFloorHeight() - VEHICLE_RACE_TRACK_LOCATION;
 		Vector3f vehicleLocation = new Vector3f(-40, florHeight, 120);
 		vehicle = new Vehicle(getPhysicsSpace(), vehicleLocation);
 		vehicle.addObserver(this);
@@ -212,9 +212,9 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * FIXME in the future erase this method, use only loadEnvironment.
 	 */
 	private void loadRoom() {
-		room = new Room(getPhysicsSpace(), display.getRenderer());
-		room.attachChild(vehicle);
-		rootNode.attachChild(room);
+		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
+		kidsRoom.attachChild(vehicle);
+		rootNode.attachChild(kidsRoom);
 	}
 
 	/**
@@ -257,8 +257,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 				InputHandler.AXIS_NONE, false);
 
 		CameraPositionHandler cameraPositionHandler = new CameraPositionHandler(vehicleChaseCamera);
-		input.addAction(cameraPositionHandler, InputHandler.DEVICE_KEYBOARD,
-				KeyInput.KEY_V, InputHandler.AXIS_NONE, false);
+		input.addAction(cameraPositionHandler, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_V, InputHandler.AXIS_NONE, false);
 	}
 
 	/**
@@ -285,12 +284,10 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 */
 	private void loadEnvironment() {
 		loadRoom();
-		//Light
 		PointLight light = new PointLight();
 		light.setLocation(LIGHT_LOCATION);
 		//Shadow
 		light.setAmbient(ColorRGBA.gray);
-		//Light color
 		light.setDiffuse(ColorRGBA.white);
 		//Reflex color
 		light.setSpecular(ColorRGBA.lightGray);

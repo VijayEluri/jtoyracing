@@ -9,7 +9,7 @@ import java.util.List;
  * TODO use chronometer at the beginning of the race.
  *
  * @version 1.0 Dec 22, 2007
- * @author Fco. Carlos L. Barros Junior
+ * @author Carlos Luz Junior
  */
 public final class HealthChronometer extends Thread implements Chronometer {
 
