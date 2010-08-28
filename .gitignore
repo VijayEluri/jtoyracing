@@ -2,4 +2,6 @@ debug.txt
 .classpath
 .project
 .settings
+.metadata
 dist/*
+bin/*
