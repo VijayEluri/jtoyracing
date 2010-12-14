@@ -96,9 +96,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Constructs a vehicle.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param chassisLocation the location of the chassis.
 	 */
 	public Vehicle(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
 		health = MAX_VALUE_HEALTH;
@@ -109,9 +106,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Creates the chassis.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param chassisLocation the location of the chassis.
 	 */
 	private void createChassis(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
 		chassis = physicsSpace.createDynamicNode();
@@ -127,8 +121,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Creates the suspension.
-	 *
-	 * @param physicsSpace the physicsSpace.
 	 */
 	private void createSuspension(PhysicsSpace physicsSpace) {
 		frontSuspension = new Suspension(physicsSpace, chassis, FRONT_SUSPENSION_LOCATION);
@@ -138,14 +130,12 @@ public class Vehicle extends Node implements Health {
 	}
 
 	/**
-	 * Accelerates the car.
-	 *
-	 * @param velocity value of the velocity.
+	 * Accelerates the vehicle.
 	 */
-	public final void accelerate(float velocity) {
+	public final void accelerate(float desiredVelocity) {
 		if (hasHealth()) {
-			rearSuspension.accelerate(velocity);
-			frontSuspension.accelerate(velocity);
+			rearSuspension.accelerate(desiredVelocity);
+			frontSuspension.accelerate(desiredVelocity);
 			if (!engineSound.isPlaying()) {
 				engineSound.play();
 			}
@@ -171,8 +161,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Verifies whether there is health available or not.
-	 *
-	 * @return <code>true</code> if there is health available, <code>false</code> if there is not.
 	 */
 	private boolean hasHealth() {
 		return health > MIN_VALUE_HEALTH;
@@ -189,8 +177,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Returns the current speed.
-	 *
-	 * @return current speed value.
 	 */
 	private float getSpeed() {
 		return chassis.getLinearVelocity(Vector3f.ZERO).length();
@@ -198,8 +184,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Steers the vehicle.
-	 *
-	 * @param direction the desired direction.
 	 */
 	public final void steer(float direction) {
 		frontSuspension.steer(direction);
@@ -214,8 +198,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Returns the chassis.
-	 *
-	 * @return the chassis.
 	 */
 	public final DynamicPhysicsNode getChassis() {
 		return this.chassis;
@@ -232,8 +214,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Returns the current health.
-	 *
-	 * @return current health.
 	 */
 	public final int getHealth() {
 		return health;
@@ -241,10 +221,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Decreases the health by a value that depends on the vehicle.
-	 *
-	 * TODO each vehicle should decrease its own health.
-	 *
-	 * @return current health.
 	 */
 	public final int decreaseHealth() {
 		health -= DECREASE_HEALTH_VALUE;
@@ -259,9 +235,6 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * Recharge the health by the given value.
-	 *
-	 * @param healthAmount amount of health.
-	 * @return current amount of health.
 	 */
 	public final int rechargeHealth(int healthAmount) {
 		health = healthAmount;

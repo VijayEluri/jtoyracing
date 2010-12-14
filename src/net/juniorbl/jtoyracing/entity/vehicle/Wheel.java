@@ -93,10 +93,6 @@ public class Wheel extends Node {
 
 	/**
 	 * Constructs a wheel.
-	 *
-	 * @param wheelBase the base that the wheel connects to.
-	 * @param location location of the wheel.
-	 * @param wheelSide side of the wheel.
 	 */
 	public Wheel(DynamicPhysicsNode wheelBase, Vector3f location, Integer wheelSide) {
 		createWheel(wheelBase, location, wheelSide);
@@ -108,10 +104,6 @@ public class Wheel extends Node {
 
 	/**
 	 * Creates a wheel based on base, location and side.
-	 *
-	 * @param wheelBase the base that the wheel connects to.
-	 * @param location location of the wheel.
-	 * @param wheelSide side of the wheel.
 	 */
 	private void createWheel(DynamicPhysicsNode wheelBase, Vector3f location, Integer wheelSide) {
 		wheel = wheelBase.getSpace().createDynamicNode();
@@ -119,9 +111,18 @@ public class Wheel extends Node {
 		PhysicsSphere tire = wheel.createSphere("tire");
 		tire.setLocalScale(TIRE_SCALE);
 		wheel.generatePhysicsGeometry();
+		selectWheelModel(wheelSide);
+		wheel.setMass(MASS);
+		wheel.setMaterial(Material.RUBBER);
+		wheel.setLocalScale(WHEEL_SCALE);
+	}
 
-		//Verifies the side to load.
-		//FIXME don't use two models.
+	/**
+	 * Verifies the correct wheel model to load.
+	 *
+	 * FIXME don't use two models.
+	 */
+	private void selectWheelModel(Integer wheelSide) {
 		if (wheelSide.equals(LEFT_WHEEL_SIDE)) {
 			wheel.attachChild(ModelUtil.convertMultipleModelToJME(
 					ResourcesPath.MODELS_PATH + "obj/whellLeftSide.obj"));
@@ -129,16 +130,10 @@ public class Wheel extends Node {
 			wheel.attachChild(ModelUtil.convertMultipleModelToJME(
 					ResourcesPath.MODELS_PATH + "obj/whellRightSide.obj"));
 		}
-
-		wheel.setMass(MASS);
-		wheel.setMaterial(Material.RUBBER);
-		wheel.setLocalScale(WHEEL_SCALE);
 	}
 
 	/**
 	 * Creates a traction axis. It responds the traction action in the wheel.
-	 *
-	 * @param tireBaseJoint the joint to create an axis.
 	 */
 	private void createTractionAxis(Joint tireBaseJoint) {
 		tractionAxis = tireBaseJoint.createRotationalAxis();
@@ -149,8 +144,6 @@ public class Wheel extends Node {
 
 	/**
 	 * Creates a steer axis. It responds the steer action in the wheel.
-	 *
-	 * @param tireBaseJoint the joint to create an axis.
 	 */
 	private void createSteerAxis(Joint tireBaseJoint) {
 		steerAxis = tireBaseJoint.createRotationalAxis();
@@ -160,11 +153,7 @@ public class Wheel extends Node {
 	}
 
 	/**
-	 * Creates a joint which connects the base and tire.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param wheelBase the base that the wheel connects to.
-	 * @return the joint created.
+	 * Creates a joint which connects the base and the tire.
 	 */
 	private Joint createBaseTireJoint(PhysicsSpace physicsSpace, DynamicPhysicsNode wheelBase) {
 		Joint tireBaseJoint = physicsSpace.createJoint();
@@ -175,11 +164,9 @@ public class Wheel extends Node {
 
 	/**
 	 * Accelerates a wheel according to a given velocity.
-	 *
-	 * @param velocity the desired velocity.
 	 */
-	public final void accelerate(float velocity) {
-		tractionAxis.setDesiredVelocity(velocity);
+	public final void accelerate(float desiredVelocity) {
+		tractionAxis.setDesiredVelocity(desiredVelocity);
 	}
 
 	/**
@@ -191,11 +178,9 @@ public class Wheel extends Node {
 
 	/**
 	 * Steers a wheel given a direction.
-	 *
-	 * @param direction the desired direction.
 	 */
-	public final void steer(float direction) {
-		steerAxis.setDesiredVelocity(direction);
+	public final void steer(float desiredDirection) {
+		steerAxis.setDesiredVelocity(desiredDirection);
 		steerAxis.setPositionMaximum(MAX_STEER_ROTATION);
 		steerAxis.setPositionMinimum(-MAX_STEER_ROTATION);
 	}

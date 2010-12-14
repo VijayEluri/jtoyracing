@@ -86,26 +86,12 @@ public class Suspension extends Node {
 	private Wheel rightWheel;
 
 	/**
-	 * Sustentation base for left wheel.
-	 */
-	private DynamicPhysicsNode leftWheelBase;
-
-	/**
-	 * Sustentation base for right wheel.
-	 */
-	private DynamicPhysicsNode rightWheelBase;
-
-	/**
 	 * Constructs a suspension. In order to create a suspension, it is necessary a chassis and the location of the
 	 * suspension.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param chassis the chassis of the vehicle.
-	 * @param location the location of the suspension.
 	 */
 	public Suspension(PhysicsSpace physicsSpace, DynamicPhysicsNode chassis, Vector3f location) {
-		leftWheelBase = createWheelBase(physicsSpace, chassis, location.add(LEFT_WHEEL_BASE_LOCATION));
-		rightWheelBase = createWheelBase(physicsSpace, chassis, location.subtract(RIGHT_WHEEL_BASE_LOCATION));
+		DynamicPhysicsNode leftWheelBase = createWheelBase(physicsSpace, chassis, location.add(LEFT_WHEEL_BASE_LOCATION));
+		DynamicPhysicsNode rightWheelBase = createWheelBase(physicsSpace, chassis, location.subtract(RIGHT_WHEEL_BASE_LOCATION));
 		leftWheel = new Wheel(leftWheelBase, LEFT_WHEEL_LOCATION, LEFT_WHEEL_SIDE);
 		this.attachChild(leftWheel);
 		rightWheel = new Wheel(rightWheelBase, RIGHT_WHEEL_LOCATION, RIGHT_WHEEL_SIDE);
@@ -113,12 +99,7 @@ public class Suspension extends Node {
 	}
 
 	/**
-	 * Creates a base for a wheel. A base is connected to the chassis by a joint.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param chassis the chassis of the vehicle.
-	 * @param location the location of the base.
-	 * @return the created base.
+	 * Creates a base for a wheel. A base is connected to the chassis by a joint which is applied a spring.
 	 */
 	private DynamicPhysicsNode createWheelBase(PhysicsSpace physicsSpace, DynamicPhysicsNode chassis,
 			Vector3f location) {
@@ -128,18 +109,13 @@ public class Suspension extends Node {
 		wheelBase.setMaterial(Material.GHOST);
 		wheelBase.setMass(MASS);
 		this.attachChild(wheelBase);
-		Joint chassisSuspensionJoint = createChassisWheelJoint(physicsSpace, chassis, wheelBase);
-		createSpring(chassisSuspensionJoint);
+		Joint chassisWheelJoint = createChassisWheelJoint(physicsSpace, chassis, wheelBase);
+		createSpring(chassisWheelJoint);
 		return wheelBase;
 	}
 
 	/**
 	 * Creates a joint which connects chassis and wheel base.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param chassis the chassis.
-	 * @param wheelBase the wheel base.
-	 * @return the created joint.
 	 */
 	private Joint createChassisWheelJoint(PhysicsSpace physicsSpace, DynamicPhysicsNode chassis,
 			DynamicPhysicsNode wheelBase) {
@@ -150,8 +126,6 @@ public class Suspension extends Node {
 
 	/**
 	 * Creates a spring. A spring allows the suspension to move in the Y axis.
-	 *
-	 * @param chassisSuspensionJoint joint used to create Y axis.
 	 */
 	private void createSpring(Joint chassisSuspensionJoint) {
 		TranslationalJointAxis spring = chassisSuspensionJoint.createTranslationalAxis();
@@ -164,12 +138,10 @@ public class Suspension extends Node {
 
 	/**
 	 * Accelerates the wheels.
-	 *
-	 * @param velocity the desired velocity.
 	 */
-	public final void accelerate(float velocity) {
-		leftWheel.accelerate(velocity);
-		rightWheel.accelerate(velocity);
+	public final void accelerate(float desiredVelocity) {
+		leftWheel.accelerate(desiredVelocity);
+		rightWheel.accelerate(desiredVelocity);
 	}
 
 	/**
@@ -182,12 +154,10 @@ public class Suspension extends Node {
 
 	/**
 	 * Steers the wheels.
-	 *
-	 * @param direction the desired direction.
 	 */
-	public final void steer(float direction) {
-		leftWheel.steer(direction);
-		rightWheel.steer(direction);
+	public final void steer(float desiredVelocity) {
+		leftWheel.steer(desiredVelocity);
+		rightWheel.steer(desiredVelocity);
 	}
 
 	/**
