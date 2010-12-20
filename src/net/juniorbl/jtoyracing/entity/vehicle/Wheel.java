@@ -39,17 +39,17 @@ public class Wheel extends Node {
 	/**
 	 * Scale of a tire.
 	 */
-	private static final int TIRE_SCALE = 2;
+	private static final float TIRE_SCALE = 1.5f;
 
 	/**
 	 * Scale of a wheel.
 	 */
-	private static final float WHEEL_SCALE = .5f;
+	private static final float WHEEL_SCALE = .4f;
 
 	/**
 	 * Mass of the wheel.
 	 */
-	private static final float MASS = 5;
+	private static final float MASS = 4;
 
 	/**
 	 * Direction of traction axis.
@@ -64,7 +64,7 @@ public class Wheel extends Node {
 	/**
 	 * Acceleration of the traction.
 	 */
-	private static final float TRACTION_ACCELERATIO = 150;
+	private static final float TRACTION_ACCELERATION = 150;
 
 	/**
 	 * Acceleration of the steer.
@@ -139,7 +139,7 @@ public class Wheel extends Node {
 		tractionAxis = tireBaseJoint.createRotationalAxis();
 		tractionAxis.setDirection(TRACTION_AXIS_DIRECTION);
 		tractionAxis.setRelativeToSecondObject(true);
-		tractionAxis.setAvailableAcceleration(TRACTION_ACCELERATIO);
+		tractionAxis.setAvailableAcceleration(TRACTION_ACCELERATION);
 	}
 
 	/**

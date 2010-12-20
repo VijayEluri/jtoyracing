@@ -71,9 +71,8 @@ public class KidsRoom extends Node {
 	 */
 	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
 		createFloor(physicsSpace, renderer.createTextureState());
-		loadRaceTrack(physicsSpace, renderer.createAlphaState(), renderer.createTextureState());
+//		loadRaceTrack(physicsSpace, renderer.createAlphaState(), renderer.createTextureState());
 		createWall(physicsSpace);
-		createLegoDoll(physicsSpace);
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);
 	}
@@ -201,6 +200,7 @@ public class KidsRoom extends Node {
 		roomObjects.setMaterial(Material.GHOST);
 		roomObjects.setLocalScale(1f);
 		roomObjects.generatePhysicsGeometry();
+		createLegoDoll(physicsSpace);
 		this.attachChild(roomObjects);
 	}
 }

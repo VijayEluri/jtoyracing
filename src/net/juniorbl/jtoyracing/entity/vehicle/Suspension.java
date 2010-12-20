@@ -63,12 +63,12 @@ public class Suspension extends Node {
 	/**
 	 * Location of the left wheel base.
 	 */
-	private static final Vector3f LEFT_WHEEL_BASE_LOCATION = new Vector3f(0, .8f, 0f);
+	private static final Vector3f LEFT_WHEEL_BASE_LOCATION = new Vector3f(0, .9f, -.3f);
 
 	/**
 	 * Location of the right wheel base.
 	 */
-	private static final Vector3f RIGHT_WHEEL_BASE_LOCATION = new Vector3f(0, -.7f, -1f);
+	private static final Vector3f RIGHT_WHEEL_BASE_LOCATION = new Vector3f(0, -.9f, -1.3f);
 
 	/**
 	 * Axis of the springs (Y axis).
