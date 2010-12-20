@@ -1,13 +1,13 @@
 #0.1
- * basic room
- 	* few toys and furniture
- * two checkpoints to restore the car's health
- * follow camera always from behind
+ * basic room **(done)**
+ 	* few toys and furniture **(done)**
+ * two checkpoints to restore the car's health **(done)**
+ * follow camera always from behind **(done)**
 
 #0.2
- * vehicle modification
- 	* simple suspension
- 	* mass and material fix
+ * vehicle modification **(done)**
+ 	* simple suspension **(done)**
+ 	* mass and material fix **(done)**
  * _Rock n' Roll Racing_ style
  	* camera mode
  	* vehicle controllers
