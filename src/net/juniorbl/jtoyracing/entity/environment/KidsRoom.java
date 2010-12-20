@@ -71,7 +71,7 @@ public class KidsRoom extends Node {
 	 */
 	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
 		createFloor(physicsSpace, renderer.createTextureState());
-//		loadRaceTrack(physicsSpace, renderer.createAlphaState(), renderer.createTextureState());
+		loadRaceTrack(physicsSpace, renderer.createAlphaState(), renderer.createTextureState());
 		createWall(physicsSpace);
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);

@@ -113,7 +113,7 @@ public class Vehicle extends Node implements Health {
 		chassis.generatePhysicsGeometry();
 		chassis.attachChild(
 				ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/vehicle.obj"));
-		chassis.generatePhysicsGeometry();
+//		chassis.generatePhysicsGeometry();
 		chassis.setMaterial(Material.IRON);
 		chassis.setLocalScale(CHASSIS_SCALE);
 		chassis.setMass(CHASSIS_MASS);
