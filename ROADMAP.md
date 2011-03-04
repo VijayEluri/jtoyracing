@@ -8,16 +8,16 @@
  * vehicle modification **(done)**
  	* simple suspension **(done)**
  	* mass and material fix **(done)**
- * _Rock n' Roll Racing_ style
- 	* camera mode
- 	* vehicle controllers
  * initial camera location fix
+ * chassis collision detection fix
+ * add a second vehicle
 
 #0.3
  * HUD information
  	* better icons
  	* countdown before the race starts
  	* _time left: xx seconds_ fix
+ 	* title screen at the beginning
 
 #0.4
- - wind-up challenge at the beginning
+ * wind-up challenge before the race
