@@ -1,13 +1,12 @@
 package net.juniorbl.jtoyracing.core.camera;
 
+import java.util.HashMap;
+
 import com.jme.input.ChaseCamera;
-import com.jme.input.thirdperson.ThirdPersonMouseLook;
 import com.jme.math.FastMath;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.scene.Spatial;
-
-import java.util.HashMap;
 
 /**
  * Camera that follows a vehicle.
