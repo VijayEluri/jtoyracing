@@ -64,7 +64,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	/**
 	 * Location of the camera.
 	 */
-	private static final Vector3f CAMERA_LOCATION = new Vector3f(-64, -7, 124);
+	private static final Vector3f CAMERA_LOCATION = new Vector3f(-40, 0, 163);
 
 	/**
 	 * Normal gravity.
@@ -83,16 +83,11 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 
 	/**
 	 * Vehicle of the game.
-	 *
-	 * TODO today there is only one vehicle, the future versions are going to have more.
 	 */
 	private Vehicle vehicle;
 
 	/**
-	 * Environment of the game.
-	 *
-	 * TODO today there is only one environment, the future versions are going to have more,
-	 * like kitchen, garden and so on.
+	 * First level of the game.
 	 */
 	private KidsRoom kidsRoom;
 
@@ -133,7 +128,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	/**
-	 * Thread that runs to monitors the health of the vehicles.
+	 * Thread to monitor the health of the vehicles.
 	 */
 	private void loadHealthMonitor() {
 		healthMonitor = new HealthMonitor(this);
@@ -158,20 +153,10 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		updateVehicleEngineSound();
 	}
 
-	/**
-	 * Loads the sound of the engines of the vehicles.
-	 *
-	 * TODO in the future get all the vehicles.
-	 */
 	private void updateVehicleEngineSound() {
 		vehicle.updateEngineSound();
 	}
 
-	/**
-	 * Update the health of the vehicles.
-	 *
-	 * TODO in the future get all the vehicles.
-	 */
 	public void updateVehiclesHealth() {
 		// When a vehicle reach a checkpoint, its health is recharged
 		if (kidsRoom.isVehicleReachedCheckpoint(vehicle.getWorldBound())) {
@@ -180,71 +165,33 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		info.setHealthBarValue(vehicle.decreaseHealth());
 	}
 
-	/**
-	 * Loads the vehicles of the game.
-	 */
 	private void loadVehicles() {
 		float florHeight = kidsRoom.getFloorHeight() - VEHICLE_RACE_TRACK_LOCATION;
 		Vector3f vehicleLocation = new Vector3f(-40, florHeight, 120);
 		vehicle = new Vehicle(getPhysicsSpace(), vehicleLocation);
 		vehicle.addObserver(this);
-
-//		SpatialTransformer rotationController = new SpatialTransformer();
-//		rotationController.setObject(vehicle, 0, -1);
-//		Quaternion rotation = new Quaternion();
-//		rotation.fromAngleAxis(FastMath.DEG_TO_RAD * 180, new Vector3f(0, 0, 1));
-//		rotationController.setRotation(0, 2, rotation);
-//		vehicle.addController(rotationController);
-
 		rootNode.attachChild(vehicle);
 	}
 
-	/**
-	 * Loads the gravitation.
-	 */
 	private void loadGravitation() {
 		getPhysicsSpace().setDirectionalGravity(NORMAL_GRAVITY);
 	}
 
-	/**
-	 * Loads the room where the race takes place.
-	 *
-	 * FIXME in the future erase this method, use only loadEnvironment.
-	 */
-	private void loadRoom() {
-		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
-		kidsRoom.attachChild(vehicle);
-		rootNode.attachChild(kidsRoom);
-	}
-
-	/**
-	 * Start point.
-	 */
 	public static void main(String[] args) {
 		JToyRacing game = new JToyRacing();
 		game.setDialogBehaviour(NEVER_SHOW_PROPS_DIALOG);
 		game.start();
 	}
 
-	/**
-	 * Load optimization.
-	 */
 	private void loadOptimization() {
 		// TODO change the key to display debug mode, now is 'V'.
-		//showPhysics = true;
 		// Don't display the back of the triangles.
 		CullState cullState = display.getRenderer().createCullState();
 		cullState.setCullMode(CullState.CS_BACK);
 		rootNode.setRenderState(cullState);
-		// Disable the default light source.
-		// lightState.setEnabled(false);
 	}
 
-	/**
-	 * Loads the keyboard controllers in order to control the vehicles.
-	 */
 	private void loadKeyboardControllers() {
-		//FIXME isn't a vehicle responsible for its own traction and steer?
 		input.addAction(new Traction(vehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_UP, InputHandler.AXIS_NONE, false);
 		input.addAction(new Traction(vehicle, FORWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
@@ -273,17 +220,19 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * Loads the camera which will follow the vehicle.
 	 */
 	private void loadCamera() {
-		cam.setLocation(CAMERA_LOCATION);
 		vehicleChaseCamera = (VehicleChaseCamera) VehicleChaseCamera.getInstance(cam, vehicle.getChassis());
+		cam.setLocation(CAMERA_LOCATION);
 	}
 
 	/**
 	 * Loads the environment where the race takes place.
-	 *
-	 * FIXME move this code to Room class
 	 */
 	private void loadEnvironment() {
 		loadRoom();
+		loadLight();
+	}
+
+	private void loadLight() {
 		PointLight light = new PointLight();
 		light.setLocation(LIGHT_LOCATION);
 		//Shadow
@@ -292,9 +241,17 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		//Reflex color
 		light.setSpecular(ColorRGBA.lightGray);
 		light.setEnabled(true);
-		// lightState.detachAll();
 		lightState.attach(light);
 		rootNode.setRenderState(lightState);
+	}
+
+	/**
+	 * Loads the room, first level of the game.
+	 */
+	private void loadRoom() {
+		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
+		kidsRoom.attachChild(vehicle);
+		rootNode.attachChild(kidsRoom);
 	}
 
 	/**

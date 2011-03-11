@@ -77,17 +77,17 @@ public final class ModelUtil {
 	 * @return the JME model converted.
 	 */
 	public static Node convertMultipleModelToJME(String path) {
-		Node modelo = null;
+		Node model = null;
 		try {
 			ByteArrayOutputStream byteArrayOS = convertModelObjToJME(path);
-			modelo = (Node) BinaryImporter.getInstance().load(
+			model = (Node) BinaryImporter.getInstance().load(
 					new ByteArrayInputStream(byteArrayOS.toByteArray()));
-			modelo.setModelBound(new BoundingBox());
-			modelo.updateModelBound();
+			model.setModelBound(new BoundingBox());
+			model.updateModelBound();
 		} catch (IOException e) {
 			//TODO handle exception
 			throw new Error(e);
 		}
-		return modelo;
+		return model;
 	}
 }

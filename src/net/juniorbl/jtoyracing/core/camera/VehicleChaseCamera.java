@@ -25,8 +25,7 @@ public final class VehicleChaseCamera extends ChaseCamera {
 	/**
 	 * Close distance from the car.
 	 */
-//	private static final int CLOSE_DISTANCE = 30;
-	private static final int CLOSE_DISTANCE = 0;
+	private static final int CLOSE_DISTANCE = 30;
 
 	/**
 	 * Vehicle chase camera.
@@ -69,11 +68,7 @@ public final class VehicleChaseCamera extends ChaseCamera {
 		Vector3f targetOffset = new Vector3f();
 		targetOffset.y = 4;
 		HashMap<String, Object> properties = new HashMap<String, Object>();
-		properties.put(ThirdPersonMouseLook.PROP_MAXROLLOUT, "70");
-		properties.put(ThirdPersonMouseLook.PROP_MINROLLOUT, "10");
 		properties.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
-//		properties.put(ThirdPersonMouseLook.PROP_MAXASCENT, "" + 25 * FastMath.DEG_TO_RAD);
-//		properties.put(ThirdPersonMouseLook.PROP_MINASCENT, "" + 10	* FastMath.DEG_TO_RAD);
 		properties.put(ChaseCamera.PROP_INITIALSPHERECOORDS, new Vector3f(15, 0, 30 * FastMath.DEG_TO_RAD));
 		properties.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
 		return properties;
