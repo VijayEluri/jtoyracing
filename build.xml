@@ -65,12 +65,17 @@
 	</target>
 	<!-- target compile -->
 	<target name="compile">
+		<mkdir dir="${build}"/>
 		<echo>Compiling the project.</echo>
 		<javac srcdir="${src}" destdir="${build}" classpathref="project-classpath"/>
+		<echo>Copying the resources.</echo>
+		<copy todir="${build}/resources">
+			<fileset dir="${resources}/" />
+		</copy>
 	</target>
 	<!-- target linux dist -->
 	<target name="dist_linux" depends="init_linux, compile">
-		<echo>Creating jar for linux.</echo>
+		<echo>Creating the jar file for linux.</echo>
 		<jar jarfile="${dist-linux}/JToyRacingLinux-${version}.jar" basedir="${build}">
 			<manifest>
 				<attribute name="Main-Class" value="net.juniorbl.jtoyracing.core.JToyRacing"/>
@@ -82,7 +87,7 @@
 	</target>
 	<!-- target windows dist -->
 	<target name="dist_windows" depends="init_windows, compile">
-		<echo>Creating jar for windows.</echo>
+		<echo>Creating the jar file for windows.</echo>
 		<jar jarfile="${dist-windows}/JToyRacingWindows-${version}.jar" basedir="${build}">
 			<includesfile />
 			<manifest>
