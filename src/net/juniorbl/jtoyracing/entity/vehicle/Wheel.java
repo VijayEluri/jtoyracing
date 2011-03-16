@@ -20,17 +20,6 @@ import com.jmex.physics.material.Material;
  * @author Carlos Luz Junior
  */
 public class Wheel extends Node {
-
-	/**
-	 * Constant that represents the left side of a wheel.
-	 */
-	public static final Integer LEFT_WHEEL_SIDE = 0;
-
-	/**
-	 * Constant that represents the right side of a wheel.
-	 */
-	public static final Integer RIGHT_WHEEL_SIDE = 1;
-
 	/**
 	 * serialVersionUID.
 	 */
@@ -94,8 +83,8 @@ public class Wheel extends Node {
 	/**
 	 * Constructs a wheel.
 	 */
-	public Wheel(DynamicPhysicsNode wheelBase, Vector3f location, Integer wheelSide) {
-		createWheel(wheelBase, location, wheelSide);
+	public Wheel(DynamicPhysicsNode wheelBase, Vector3f location) {
+		createWheel(wheelBase, location);
 		Joint tireBaseJoint = createBaseTireJoint(wheelBase.getSpace(), wheelBase);
 		createSteerAxis(tireBaseJoint);
 		createTractionAxis(tireBaseJoint);
@@ -103,33 +92,18 @@ public class Wheel extends Node {
 	}
 
 	/**
-	 * Creates a wheel based on base, location and side.
+	 * Creates a wheel based on base and location.
 	 */
-	private void createWheel(DynamicPhysicsNode wheelBase, Vector3f location, Integer wheelSide) {
+	private void createWheel(DynamicPhysicsNode wheelBase, Vector3f location) {
 		wheel = wheelBase.getSpace().createDynamicNode();
 		wheel.setLocalTranslation(wheelBase.getLocalTranslation().add(location));
 		PhysicsSphere tire = wheel.createSphere("tire");
 		tire.setLocalScale(TIRE_SCALE);
 		wheel.generatePhysicsGeometry();
-		selectWheelModel(wheelSide);
+		wheel.attachChild(ModelUtil.convertModelSimpleObjToJME(ResourcesPath.MODELS_PATH + "obj/whell.obj"));
 		wheel.setMass(MASS);
 		wheel.setMaterial(Material.RUBBER);
 		wheel.setLocalScale(WHEEL_SCALE);
-	}
-
-	/**
-	 * Verifies the correct wheel model to load.
-	 *
-	 * FIXME don't use two models.
-	 */
-	private void selectWheelModel(Integer wheelSide) {
-		if (wheelSide.equals(LEFT_WHEEL_SIDE)) {
-			wheel.attachChild(ModelUtil.convertMultipleModelToJME(
-					ResourcesPath.MODELS_PATH + "obj/whellLeftSide.obj"));
-		} else if (wheelSide.equals(RIGHT_WHEEL_SIDE)) {
-			wheel.attachChild(ModelUtil.convertMultipleModelToJME(
-					ResourcesPath.MODELS_PATH + "obj/whellRightSide.obj"));
-		}
 	}
 
 	/**

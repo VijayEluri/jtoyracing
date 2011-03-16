@@ -9,9 +9,6 @@ import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.TranslationalJointAxis;
 import com.jmex.physics.material.Material;
 
-import static net.juniorbl.jtoyracing.entity.vehicle.Wheel.LEFT_WHEEL_SIDE;
-import static net.juniorbl.jtoyracing.entity.vehicle.Wheel.RIGHT_WHEEL_SIDE;
-
 /**
  * Suspension of a car.
  *
@@ -92,9 +89,9 @@ public class Suspension extends Node {
 	public Suspension(PhysicsSpace physicsSpace, DynamicPhysicsNode chassis, Vector3f location) {
 		DynamicPhysicsNode leftWheelBase = createWheelBase(physicsSpace, chassis, location.add(LEFT_WHEEL_BASE_LOCATION));
 		DynamicPhysicsNode rightWheelBase = createWheelBase(physicsSpace, chassis, location.subtract(RIGHT_WHEEL_BASE_LOCATION));
-		leftWheel = new Wheel(leftWheelBase, LEFT_WHEEL_LOCATION, LEFT_WHEEL_SIDE);
+		leftWheel = new Wheel(leftWheelBase, LEFT_WHEEL_LOCATION);
 		this.attachChild(leftWheel);
-		rightWheel = new Wheel(rightWheelBase, RIGHT_WHEEL_LOCATION, RIGHT_WHEEL_SIDE);
+		rightWheel = new Wheel(rightWheelBase, RIGHT_WHEEL_LOCATION);
 		this.attachChild(rightWheel);
 	}
 
