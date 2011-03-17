@@ -3,7 +3,7 @@ package net.juniorbl.jtoyracing.entity.vehicle;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import net.juniorbl.jtoyracing.audio.AudioConfig;
+import net.juniorbl.jtoyracing.core.audio.AudioConfig;
 import net.juniorbl.jtoyracing.util.ModelUtil;
 
 import org.junit.Before;

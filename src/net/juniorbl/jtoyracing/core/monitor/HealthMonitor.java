@@ -1,4 +1,6 @@
-package net.juniorbl.jtoyracing.core;
+package net.juniorbl.jtoyracing.core.monitor;
+
+import net.juniorbl.jtoyracing.core.JToyRacing;
 
 /**
  * Thread responsible for monitor the car's health.

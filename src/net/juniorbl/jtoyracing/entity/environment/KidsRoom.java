@@ -2,8 +2,8 @@ package net.juniorbl.jtoyracing.entity.environment;
 
 import javax.swing.ImageIcon;
 
+import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
-import net.juniorbl.jtoyracing.util.ResourcesPath;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingVolume;
@@ -11,7 +11,6 @@ import com.jme.image.Texture;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
-import com.jme.scene.state.AlphaState;
 import com.jme.scene.state.TextureState;
 import com.jme.util.TextureManager;
 import com.jmex.physics.PhysicsSpace;
@@ -65,13 +64,10 @@ public class KidsRoom extends Node {
 
 	/**
 	 * Constructs a Room. It uses physicsSpace states and renderer to build its components.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param renderer the renderer.
 	 */
 	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
 		createFloor(physicsSpace, renderer.createTextureState());
-		loadRaceTrack(physicsSpace, renderer.createAlphaState(), renderer.createTextureState());
+		loadRaceTrack(physicsSpace, renderer);
 		createWall(physicsSpace);
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);
@@ -79,9 +75,6 @@ public class KidsRoom extends Node {
 
 	/**
 	 * Creates the floor of the room.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param textureState the textureState.
 	 */
 	private void createFloor(PhysicsSpace physicsSpace, TextureState textureState) {
 		MidPointHeightMap mapHeight = new MidPointHeightMap(32, 5f);
@@ -99,11 +92,6 @@ public class KidsRoom extends Node {
 		loadFloorTexture(textureState);
 	}
 
-	/**
-	 * Loads a texture of the floor.
-	 *
-	 * @param textureState the textureState.
-	 */
 	private void loadFloorTexture(TextureState textureState) {
 		ImageIcon imagemTextura = new ImageIcon(
 				KidsRoom.class.getClassLoader().getResource(ResourcesPath.TEXTURE_PATH + "roomFloor.jpg"));
@@ -115,16 +103,8 @@ public class KidsRoom extends Node {
 		floorBlock.setRenderState(textureState);
 	}
 
-	/**
-	 * Loads the race track.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param alphaState the alphaState.
-	 * @param textureState the textureState.
-	 */
-	private void loadRaceTrack(PhysicsSpace physicsSpace, AlphaState alphaState, TextureState textureState) {
-		raceTrack = new RaceTrack(physicsSpace,
-				new Vector3f(20, getFloorHeight(), 55), alphaState, textureState);
+	private void loadRaceTrack(PhysicsSpace physicsSpace, Renderer renderer) {
+		raceTrack = new RaceTrack(physicsSpace, new Vector3f(20, getFloorHeight(), 55), renderer);
 		this.attachChild(raceTrack);
 	}
 
@@ -132,8 +112,6 @@ public class KidsRoom extends Node {
 	 * Creates the wall.
 	 *
 	 * FIXME use 4 Quad.
-	 *
-	 * @param physicsSpace the physicsSpace.
 	 */
 	private void createWall(PhysicsSpace physicsSpace) {
 		StaticPhysicsNode physicWallProperties = physicsSpace.createStaticNode();
@@ -150,9 +128,6 @@ public class KidsRoom extends Node {
 
 	/**
 	 * Checks whether a vehicle reached a checkpoint of the race track.
-	 *
-	 * @param vehicleBoundingVolume the bounding volume of a vehicles.
-	 * @return <code>true</code> if the checkpoint was reached, <code>false</code> if not.
 	 */
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {
 		return raceTrack.isVehicleReachedCheckpoint(vehicleBoundingVolume);
@@ -160,8 +135,6 @@ public class KidsRoom extends Node {
 
 	/**
 	 * Gets the floor height.
-	 *
-	 * @return floorHeight the floor height.
 	 */
 	public final float getFloorHeight() {
 		return floorBlock.getHeight(new Vector3f());
@@ -169,8 +142,6 @@ public class KidsRoom extends Node {
 
 	/**
 	 * Creates the lego doll in bend three.
-	 *
-	 * @param physicsSpace the physicsSpace.
 	 */
 	private void createLegoDoll(PhysicsSpace physicsSpace) {
 		StaticPhysicsNode legoDoll = physicsSpace.createStaticNode();
@@ -188,8 +159,6 @@ public class KidsRoom extends Node {
 	 * Creates the objects that completes the room.
 	 *
 	 * FIXME don't load the objects as one big model.
-	 *
-	 * @param physicsSpace the physicsSpace.
 	 */
 	private void createRoomObjects(PhysicsSpace physicsSpace) {
 		StaticPhysicsNode roomObjects = physicsSpace.createStaticNode();
@@ -199,7 +168,6 @@ public class KidsRoom extends Node {
 				ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/roomObjects.obj"));
 		roomObjects.setMaterial(Material.GHOST);
 		roomObjects.setLocalScale(1f);
-		roomObjects.generatePhysicsGeometry();
 		createLegoDoll(physicsSpace);
 		this.attachChild(roomObjects);
 	}

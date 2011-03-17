@@ -3,14 +3,15 @@ package net.juniorbl.jtoyracing.entity.vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.juniorbl.jtoyracing.audio.AudioConfig;
-import net.juniorbl.jtoyracing.core.Health;
-import net.juniorbl.jtoyracing.core.HealthObserver;
+import net.juniorbl.jtoyracing.core.audio.AudioConfig;
+import net.juniorbl.jtoyracing.core.monitor.Health;
+import net.juniorbl.jtoyracing.core.monitor.HealthObserver;
+import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
-import net.juniorbl.jtoyracing.util.ResourcesPath;
 
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;
+import com.jme.scene.shape.Box;
 import com.jmex.audio.AudioTrack;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsSpace;
@@ -94,9 +95,6 @@ public class Vehicle extends Node implements Health {
 	 */
 	private AudioTrack engineSound;
 
-	/**
-	 * Constructs a vehicle.
-	 */
 	public Vehicle(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
 		health = MAX_VALUE_HEALTH;
 		createChassis(physicsSpace, chassisLocation);
@@ -104,25 +102,21 @@ public class Vehicle extends Node implements Health {
 		loadEngineSound();
 	}
 
-	/**
-	 * Creates the chassis.
-	 */
 	private void createChassis(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
 		chassis = physicsSpace.createDynamicNode();
 		chassis.setLocalTranslation(chassisLocation);
-		chassis.generatePhysicsGeometry();
+		Box chassisCollisionBox = new Box("collisionBox", new Vector3f(3, .2f, 1.1f), 5.9f, .02f, 1.5f);
+//		chassisCollisionBox.setDefaultColor(ColorRGBA.red);
+		chassis.attachChild(chassisCollisionBox);
+		chassis.generatePhysicsGeometry(true);
 		chassis.attachChild(
 				ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/vehicle.obj"));
-//		chassis.generatePhysicsGeometry();
 		chassis.setMaterial(Material.IRON);
 		chassis.setLocalScale(CHASSIS_SCALE);
 		chassis.setMass(CHASSIS_MASS);
 		this.attachChild(chassis);
 	}
 
-	/**
-	 * Creates the suspension.
-	 */
 	private void createSuspension(PhysicsSpace physicsSpace) {
 		frontSuspension = new Suspension(physicsSpace, chassis, FRONT_SUSPENSION_LOCATION);
 		this.attachChild(frontSuspension);
@@ -130,9 +124,6 @@ public class Vehicle extends Node implements Health {
 		this.attachChild(rearSuspension);
 	}
 
-	/**
-	 * Accelerates the vehicle.
-	 */
 	public final void accelerate(float desiredVelocity) {
 		if (hasHealth()) {
 			rearSuspension.accelerate(desiredVelocity);
@@ -145,9 +136,6 @@ public class Vehicle extends Node implements Health {
 		}
 	}
 
-	/**
-	 * Stops the car.
-	 */
 	public final void stop() {
 		if (hasHealth()) {
 			rearSuspension.stop();
@@ -183,23 +171,14 @@ public class Vehicle extends Node implements Health {
 		return chassis.getLinearVelocity(Vector3f.ZERO).length();
 	}
 
-	/**
-	 * Steers the vehicle.
-	 */
 	public final void steer(float direction) {
 		frontSuspension.steer(direction);
 	}
 
-	/**
-	 * Unsteer the vehicle.
-	 */
 	public final void unsteer() {
 		frontSuspension.unsteer();
 	}
 
-	/**
-	 * Returns the chassis.
-	 */
 	public final DynamicPhysicsNode getChassis() {
 		return this.chassis;
 	}
@@ -213,9 +192,6 @@ public class Vehicle extends Node implements Health {
 //		//TODO http://www.jmonkeyengine.com/jmeforum/index.php?topic=5837.msg47229#msg47229
 //	}
 
-	/**
-	 * Returns the current health.
-	 */
 	public final int getHealth() {
 		return health;
 	}
@@ -234,9 +210,6 @@ public class Vehicle extends Node implements Health {
 		return health;
 	}
 
-	/**
-	 * Recharge the health by the given value.
-	 */
 	public final int rechargeHealth(int healthAmount) {
 		health = healthAmount;
 		if (!engineSound.isPlaying()) {
@@ -245,9 +218,6 @@ public class Vehicle extends Node implements Health {
 		return health;
 	}
 
-	/**
-	 * Loads the engine sound.
-	 */
 	private void loadEngineSound() {
 		engineSound = AudioConfig.loadSoundEffect(ResourcesPath.AUDIO_PATH + "engine.ogg");
 		engineSound.play();

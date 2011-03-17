@@ -1,7 +1,7 @@
 package net.juniorbl.jtoyracing.entity.vehicle;
 
+import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
-import net.juniorbl.jtoyracing.util.ResourcesPath;
 
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;

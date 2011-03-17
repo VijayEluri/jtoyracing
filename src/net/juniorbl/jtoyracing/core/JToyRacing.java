@@ -1,13 +1,17 @@
 package net.juniorbl.jtoyracing.core;
 
 import static net.juniorbl.jtoyracing.entity.vehicle.Vehicle.MAX_VALUE_HEALTH;
-import net.juniorbl.jtoyracing.action.camera.CameraPositionHandler;
-import net.juniorbl.jtoyracing.action.vehicle.Steer;
-import net.juniorbl.jtoyracing.action.vehicle.Traction;
-import net.juniorbl.jtoyracing.audio.AudioConfig;
+import net.juniorbl.jtoyracing.core.audio.AudioConfig;
+import net.juniorbl.jtoyracing.core.camera.CameraPositionHandler;
 import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
 import net.juniorbl.jtoyracing.core.hud.Info;
+import net.juniorbl.jtoyracing.core.monitor.ChronometerObserver;
+import net.juniorbl.jtoyracing.core.monitor.HealthChronometer;
+import net.juniorbl.jtoyracing.core.monitor.HealthMonitor;
+import net.juniorbl.jtoyracing.core.monitor.HealthObserver;
 import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
+import net.juniorbl.jtoyracing.entity.vehicle.Steer;
+import net.juniorbl.jtoyracing.entity.vehicle.Traction;
 import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
 
 import com.jme.input.InputHandler;

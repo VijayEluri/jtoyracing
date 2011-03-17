@@ -1,4 +1,4 @@
-package net.juniorbl.jtoyracing.audio;
+package net.juniorbl.jtoyracing.core.audio;
 
 import com.jme.renderer.Camera;
 import com.jmex.audio.AudioSystem;

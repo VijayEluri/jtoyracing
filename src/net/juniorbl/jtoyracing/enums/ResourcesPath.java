@@ -1,4 +1,4 @@
-package net.juniorbl.jtoyracing.util;
+package net.juniorbl.jtoyracing.enums;
 
 /**
  * Paths of the resources.

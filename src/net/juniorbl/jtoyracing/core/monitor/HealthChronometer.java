@@ -1,7 +1,8 @@
-package net.juniorbl.jtoyracing.core;
+package net.juniorbl.jtoyracing.core.monitor;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Chronometer used when a vehicle stops because of lack of health.

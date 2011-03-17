@@ -1,6 +1,5 @@
-package net.juniorbl.jtoyracing.action.camera;
+package net.juniorbl.jtoyracing.core.camera;
 
-import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
 
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;

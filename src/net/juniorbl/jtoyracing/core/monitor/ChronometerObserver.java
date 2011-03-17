@@ -1,4 +1,4 @@
-package net.juniorbl.jtoyracing.core;
+package net.juniorbl.jtoyracing.core.monitor;
 
 /**
  * Define methods to the chronometer observers (Observer pattern).

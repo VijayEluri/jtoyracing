@@ -3,12 +3,13 @@ package net.juniorbl.jtoyracing.entity.environment;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
-import net.juniorbl.jtoyracing.util.ResourcesPath;
 
 import com.jme.bounding.BoundingVolume;
 import com.jme.image.Texture;
 import com.jme.math.Vector3f;
+import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
 import com.jme.scene.state.AlphaState;
 import com.jme.scene.state.TextureState;
@@ -42,29 +43,15 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Constructs a race track. It uses various states to build its components.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param trackLocation the trackLocation.
-	 * @param alphaState the alphaState.
-	 * @param textureState the textureState.
 	 */
-	public RaceTrack(PhysicsSpace physicsSpace, Vector3f trackLocation,
-			AlphaState alphaState, TextureState textureState) {
-		//FIXME trackLocation should be in this class
+	public RaceTrack(PhysicsSpace physicsSpace, Vector3f trackLocation, Renderer renderer) {
 		createTrack(physicsSpace, trackLocation);
-		createCheckPoints(physicsSpace, trackLocation, alphaState, textureState);
+		createCheckPoints(physicsSpace, trackLocation, renderer);
 	}
 
-	/**
-	 * Create the track.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param trackLocation the trackLocation.
-	 */
 	private void createTrack(PhysicsSpace physicsSpace, Vector3f trackLocation) {
 		track = physicsSpace.createStaticNode();
 		track.setLocalTranslation(trackLocation);
-//		track.createBox("track");
 		track.setLocalScale(1f);
 		track.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/raceTrack.obj"));
 		track.generatePhysicsGeometry(true);
@@ -73,17 +60,11 @@ public class RaceTrack extends Node {
 	}
 
 	/**
-	 * Create the checkpoints of the track. Checkpoints are some locations around a race track
+	 * Creates the checkpoints of the track. Checkpoints are some locations around a race track
 	 * that recharge the health of the cars. It's the same location as the track because
 	 * they are in the same 3D model.
-	 *
-	 * @param physicsSpace the physicsSpace.
-	 * @param checkPointsLocation the location of the checkpoints, same location as the track.
-	 * @param alphaState the alphaState.
-	 * @param textureState the textureState.
 	 */
-	private void createCheckPoints(PhysicsSpace physicsSpace, Vector3f checkPointsLocation,
-			AlphaState alphaState, TextureState textureState) {
+	private void createCheckPoints(PhysicsSpace physicsSpace, Vector3f checkPointsLocation, Renderer renderer) {
 		checkPoints = new ArrayList<StaticPhysicsNode>();
 		//bend #3 checkpoint
 		StaticPhysicsNode bendThreeCheckPoint = physicsSpace.createStaticNode();
@@ -102,15 +83,13 @@ public class RaceTrack extends Node {
 		configureCheckPoint(startCheckPoint);
 		checkPoints.add(startCheckPoint);
 
-		configureCheckPointsStates(alphaState, textureState);
+		configureCheckPointsStates(renderer);
 		this.attachChild(bendThreeCheckPoint);
 		this.attachChild(startCheckPoint);
 	}
 
 	/**
-	 * Configure the checkpoint so that there's no collision with it.
-	 *
-	 * @param checkPoint the checkpoint.
+	 * Configures the checkpoint so that there's no collision with it.
 	 */
 	private void configureCheckPoint(StaticPhysicsNode checkPoint) {
 		checkPoint.generatePhysicsGeometry();
@@ -119,12 +98,11 @@ public class RaceTrack extends Node {
 	}
 
 	/**
-	 * Configure the states of the checkpoints. TextureState is used along with alphastate to set them transparent.
-	 *
-	 * @param alphaState the alphaState.
-	 * @param textureState the textureState.
+	 * Configures the states of the checkpoints. TextureState is used along with alphastate to set them transparent.
 	 */
-	private void configureCheckPointsStates(AlphaState alphaState, TextureState textureState) {
+	private void configureCheckPointsStates(Renderer renderer) {
+		AlphaState alphaState = renderer.createAlphaState();
+		TextureState textureState = renderer.createTextureState();
 		for (StaticPhysicsNode checkPoint : checkPoints) {
 			Texture texture = TextureManager.loadTexture(getClass().getClassLoader()
 					.getResource(ResourcesPath.TEXTURE_PATH + "transparency.png"),
@@ -145,9 +123,6 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Checks whether a vehicle reached a checkpoint.
-	 *
-	 * @param vehicleBoundingVolume the bounding volume of a vehicles.
-	 * @return <code>true</code> if the checkpoint was reached, <code>false</code> if not.
 	 */
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {
 		for (StaticPhysicsNode checkPoint : checkPoints) {

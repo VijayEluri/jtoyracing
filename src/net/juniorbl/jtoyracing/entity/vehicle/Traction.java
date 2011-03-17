@@ -1,8 +1,7 @@
-package net.juniorbl.jtoyracing.action.vehicle;
+package net.juniorbl.jtoyracing.entity.vehicle;
 
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;
-import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
 
 /**
  * Traction of a car. It's responsible for the forward and backward movement.

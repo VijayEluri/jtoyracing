@@ -2,7 +2,7 @@ package net.juniorbl.jtoyracing.core.hud;
 
 import java.nio.FloatBuffer;
 
-import net.juniorbl.jtoyracing.util.ResourcesPath;
+import net.juniorbl.jtoyracing.enums.ResourcesPath;
 
 import com.jme.image.Texture;
 import com.jme.math.Vector3f;
