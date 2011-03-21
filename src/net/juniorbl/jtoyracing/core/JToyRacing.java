@@ -13,6 +13,7 @@ import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
 import net.juniorbl.jtoyracing.entity.vehicle.Steer;
 import net.juniorbl.jtoyracing.entity.vehicle.Traction;
 import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
+import net.juniorbl.jtoyracing.util.StateUtil;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -120,6 +121,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 */
 	@Override
 	protected void simpleInitGame() {
+		loadUtil();
 		loadOptimization();
 		loadEnvironment();
 		loadVehicles();
@@ -129,6 +131,10 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		loadInfo();
 		loadAudio();
 		loadHealthMonitor();
+	}
+
+	private void loadUtil() {
+		StateUtil.setRenderer(display.getRenderer());
 	}
 
 	/**
@@ -253,7 +259,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * Loads the room, first level of the game.
 	 */
 	private void loadRoom() {
-		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
+		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer().createTextureState());
 		kidsRoom.attachChild(vehicle);
 		rootNode.attachChild(kidsRoom);
 	}

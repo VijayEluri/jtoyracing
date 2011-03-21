@@ -8,6 +8,7 @@ import net.juniorbl.jtoyracing.core.monitor.Health;
 import net.juniorbl.jtoyracing.core.monitor.HealthObserver;
 import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
+import net.juniorbl.jtoyracing.util.StateUtil;
 
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;
@@ -26,9 +27,14 @@ import com.jmex.physics.material.Material;
 public class Vehicle extends Node implements Health {
 
 	/**
-	 * Maximum value of health.
+	 * Maximum health value.
 	 */
 	public static final int MAX_VALUE_HEALTH = 500;
+
+	/**
+	 * Minimum health value.
+	 */
+	private static final int MIN_VALUE_HEALTH = 0;
 
 	/**
 	 * serialVersionUID.
@@ -61,22 +67,17 @@ public class Vehicle extends Node implements Health {
 	private static final Vector3f REAR_SUSPENSION_LOCATION = new Vector3f(3.2f, -1.6f, 0);
 
 	/**
-	 * Minimum value of health.
-	 */
-	private static final int MIN_VALUE_HEALTH = 0;
-
-	/**
 	 * Health observers.
 	 */
 	private List <HealthObserver> healthObservers = new ArrayList<HealthObserver>();
 
 	/**
-	 * Health of a vehicle. The health decreases with time and is recharged when a checkpoint is reached.
+	 * Health of the vehicle. The health decreases with time and is recharged when a checkpoint is reached.
 	 */
 	private int health;
 
 	/**
-	 * Chassis of a vehicle.
+	 * Chassis of the vehicle.
 	 */
 	private DynamicPhysicsNode chassis;
 
@@ -105,8 +106,8 @@ public class Vehicle extends Node implements Health {
 	private void createChassis(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
 		chassis = physicsSpace.createDynamicNode();
 		chassis.setLocalTranslation(chassisLocation);
-		Box chassisCollisionBox = new Box("collisionBox", new Vector3f(3, .2f, 1.1f), 5.9f, .02f, 1.5f);
-//		chassisCollisionBox.setDefaultColor(ColorRGBA.red);
+		Box chassisCollisionBox = new Box("chassisCollisionBox", new Vector3f(3, .2f, 1.1f), 5.9f, .02f, 1.5f);
+		StateUtil.makeTransparent(chassisCollisionBox);
 		chassis.attachChild(chassisCollisionBox);
 		chassis.generatePhysicsGeometry(true);
 		chassis.attachChild(

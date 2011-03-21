@@ -9,7 +9,6 @@ import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingVolume;
 import com.jme.image.Texture;
 import com.jme.math.Vector3f;
-import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
 import com.jme.scene.state.TextureState;
 import com.jme.util.TextureManager;
@@ -65,9 +64,9 @@ public class KidsRoom extends Node {
 	/**
 	 * Constructs a Room. It uses physicsSpace states and renderer to build its components.
 	 */
-	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
-		createFloor(physicsSpace, renderer.createTextureState());
-		loadRaceTrack(physicsSpace, renderer);
+	public KidsRoom(PhysicsSpace physicsSpace, TextureState textureState) {
+		createFloor(physicsSpace, textureState);
+		loadRaceTrack(physicsSpace);
 		createWall(physicsSpace);
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);
@@ -103,8 +102,8 @@ public class KidsRoom extends Node {
 		floorBlock.setRenderState(textureState);
 	}
 
-	private void loadRaceTrack(PhysicsSpace physicsSpace, Renderer renderer) {
-		raceTrack = new RaceTrack(physicsSpace, new Vector3f(20, getFloorHeight(), 55), renderer);
+	private void loadRaceTrack(PhysicsSpace physicsSpace) {
+		raceTrack = new RaceTrack(physicsSpace, getFloorHeight());
 		this.attachChild(raceTrack);
 	}
 

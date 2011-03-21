@@ -8,8 +8,8 @@
  * vehicle modification **(done)**
  	* simple suspension **(done)**
  	* mass and material fix **(done)**
- * initial camera location fix
- * chassis collision detection fix
+ * initial camera location fix **(done)**
+ * chassis collision detection fix **(done)**
  * add a second vehicle
 
 #0.3
