@@ -2,6 +2,7 @@ package net.juniorbl.jtoyracing.entity.environment;
 
 import javax.swing.ImageIcon;
 
+import net.juniorbl.jtoyracing.enums.GridPosition;
 import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
 
@@ -149,7 +150,8 @@ public class KidsRoom extends Node {
 		legoDoll.attachChild(ModelUtil.convertMultipleModelToJME(
 				ResourcesPath.MODELS_PATH + "obj/legoDoll.obj"));
 		legoDoll.setMaterial(Material.IRON);
-		legoDoll.setLocalScale(2.5f);
+		final float legoDollScale = 2.5f;
+		legoDoll.setLocalScale(legoDollScale);
 		legoDoll.generatePhysicsGeometry();
 		this.attachChild(legoDoll);
 	}
@@ -169,5 +171,9 @@ public class KidsRoom extends Node {
 		roomObjects.setLocalScale(1f);
 		createLegoDoll(physicsSpace);
 		this.attachChild(roomObjects);
+	}
+
+	public final Vector3f getGridPosition(GridPosition position) {
+		return raceTrack.getGridPosition(position, getFloorHeight());
 	}
 }

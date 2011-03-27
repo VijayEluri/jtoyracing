@@ -13,6 +13,7 @@ import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
 import net.juniorbl.jtoyracing.entity.vehicle.Steer;
 import net.juniorbl.jtoyracing.entity.vehicle.Traction;
 import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
+import net.juniorbl.jtoyracing.enums.GridPosition;
 import net.juniorbl.jtoyracing.util.StateUtil;
 
 import com.jme.input.InputHandler;
@@ -60,11 +61,6 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * Location of the light.
 	 */
 	private static final Vector3f LIGHT_LOCATION = new Vector3f(0, 40, 0);
-
-	/**
-	 * Location of the vehicle in the race track.
-	 */
-	private static final float VEHICLE_RACE_TRACK_LOCATION = 28.2f;
 
 	/**
 	 * Location of the camera.
@@ -160,10 +156,10 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		super.simpleUpdate();
 		vehicleChaseCamera.update(tpf);
 		audio.update();
-		updateVehicleEngineSound();
+		updateEngineSounds();
 	}
 
-	private void updateVehicleEngineSound() {
+	private void updateEngineSounds() {
 		vehicle.updateEngineSound();
 	}
 
@@ -176,9 +172,22 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void loadVehicles() {
-		float florHeight = kidsRoom.getFloorHeight() - VEHICLE_RACE_TRACK_LOCATION;
-		Vector3f vehicleLocation = new Vector3f(-40, florHeight, 120);
-		vehicle = new Vehicle(getPhysicsSpace(), vehicleLocation);
+		loadPlayerVehicle();
+		loadComputerVehicle();
+	}
+
+	private void loadComputerVehicle() {
+		Vehicle computerVehicle = new Vehicle(getPhysicsSpace(), ColorRGBA.blue);
+		computerVehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.SECOND));
+	    computerVehicle.rotateUponItself(-1.6f);
+		computerVehicle.addObserver(this);
+		rootNode.attachChild(computerVehicle);
+	}
+
+	private void loadPlayerVehicle() {
+		vehicle = new Vehicle(getPhysicsSpace(), ColorRGBA.red);
+		vehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.FIRST));
+	    vehicle.rotateUponItself(-1.6f);
 		vehicle.addObserver(this);
 		rootNode.attachChild(vehicle);
 	}
@@ -202,9 +211,9 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void loadKeyboardControllers() {
-		input.addAction(new Traction(vehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
-				KeyInput.KEY_UP, InputHandler.AXIS_NONE, false);
 		input.addAction(new Traction(vehicle, FORWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
+				KeyInput.KEY_UP, InputHandler.AXIS_NONE, false);
+		input.addAction(new Traction(vehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_DOWN, InputHandler.AXIS_NONE, false);
 		input.addAction(new Steer(vehicle, LEFT_STEER_DIRECTION),
 				InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_LEFT,

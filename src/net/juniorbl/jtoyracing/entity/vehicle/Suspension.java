@@ -1,7 +1,6 @@
 package net.juniorbl.jtoyracing.entity.vehicle;
 
 import com.jme.math.Vector3f;
-
 import com.jme.scene.Node;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
@@ -68,11 +67,6 @@ public class Suspension extends Node {
 	private static final Vector3f RIGHT_WHEEL_BASE_LOCATION = new Vector3f(0, -.9f, -1.3f);
 
 	/**
-	 * Axis of the springs (Y axis).
-	 */
-	private static final Vector3f SPRING_AXIS = new Vector3f(0, 1, 0);
-
-	/**
 	 * Left wheel of the suspension.
 	 */
 	private Wheel leftWheel;
@@ -130,7 +124,7 @@ public class Suspension extends Node {
 		spring.setPositionMinimum(-MAX_SPRING_DISLOCATION);
 		spring.setAvailableAcceleration(SPRING_ACCELERATION);
 		spring.setDesiredVelocity(SPRING_VELOCITY);
-		spring.setDirection(SPRING_AXIS);
+		spring.setDirection(Vector3f.UNIT_Y);
 	}
 
 	/**

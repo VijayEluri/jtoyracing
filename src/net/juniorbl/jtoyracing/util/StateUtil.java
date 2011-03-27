@@ -16,10 +16,13 @@ public final class StateUtil {
 
 	private static Renderer renderer;
 
+	/**
+	 * Prevents this class from being instantiated.
+	 */
 	private StateUtil() { }
 
 	/**
-	 * Makes an arbitrary number of scene elements transparent.
+	 * Makes transparent an arbitrary number of scene elements.
 	 */
 	public static void makeTransparent(SceneElement... sceneElements) {
 		for (SceneElement sceneElement : sceneElements) {

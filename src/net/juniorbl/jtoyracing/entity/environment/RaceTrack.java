@@ -3,6 +3,7 @@ package net.juniorbl.jtoyracing.entity.environment;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.juniorbl.jtoyracing.enums.GridPosition;
 import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
 import net.juniorbl.jtoyracing.util.StateUtil;
@@ -21,6 +22,21 @@ import com.jmex.physics.material.Material;
  * @author Carlos Luz Junior
  */
 public class RaceTrack extends Node {
+
+	/**
+	 * X location of the vehicle in the race track.
+	 */
+	public static final float VEHICLE_X_LOCATION = 28.2f;
+
+	/**
+	 * X location of the first grid in the race track.
+	 */
+	private static final int X_LOCATION_FIRST_GRID_POSITION = -50;
+
+	/**
+	 * X location of the second grid in the race track.
+	 */
+	private static final int X_LOCATION_SECOND_GRID_POSITION = -40;
 
 	/**
 	 * serialVersionUID.
@@ -117,5 +133,16 @@ public class RaceTrack extends Node {
 			}
 		}
 		return false;
+	}
+
+	public final Vector3f getGridPosition(GridPosition position, Float floorHeight) {
+		float yLocation = floorHeight - VEHICLE_X_LOCATION;
+		final Vector3f gridPosition = new Vector3f(0, yLocation, 120);
+		if (GridPosition.FIRST.equals(position)) {
+			gridPosition.setX(X_LOCATION_FIRST_GRID_POSITION);
+		} else if (GridPosition.SECOND.equals(position)) {
+			gridPosition.setX(X_LOCATION_SECOND_GRID_POSITION);
+		}
+		return gridPosition;
 	}
 }

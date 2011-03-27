@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import net.juniorbl.jtoyracing.core.audio.AudioConfig;
 import net.juniorbl.jtoyracing.util.ModelUtil;
+import net.juniorbl.jtoyracing.util.StateUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jmex.audio.AudioTrack;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
@@ -26,7 +28,7 @@ import com.jmex.physics.geometry.PhysicsSphere;
  * @author Carlos Luz Junior
  */
 @RunWith(org.powermock.modules.junit4.legacy.PowerMockRunner.class)
-@PrepareForTest({ ModelUtil.class, AudioConfig.class })
+@PrepareForTest({ ModelUtil.class, AudioConfig.class, StateUtil.class })
 public class VehicleTest {
 
 	private PhysicsSpace physicsSpace;
@@ -51,14 +53,14 @@ public class VehicleTest {
 
 	@Test
 	public void testDecreaseHealth() {
-		Vehicle vehicle = new Vehicle(physicsSpace, new Vector3f());
+		Vehicle vehicle = new Vehicle(physicsSpace, ColorRGBA.blue);
 		vehicle.decreaseHealth();
 		assertEquals(vehicle.getHealth(), 475);
 	}
 
 	@Test
 	public void testRechargeHealth() {
-		Vehicle vehicle = new Vehicle(physicsSpace, new Vector3f());
+		Vehicle vehicle = new Vehicle(physicsSpace, ColorRGBA.blue);
 		vehicle.decreaseHealth();
 		vehicle.rechargeHealth(250);
 		assertEquals(vehicle.getHealth(), 250);
@@ -74,6 +76,7 @@ public class VehicleTest {
 		mockedAudio = mock(AudioTrack.class);
 		PowerMockito.mockStatic(ModelUtil.class);
 		PowerMockito.mockStatic(AudioConfig.class);
+		PowerMockito.mockStatic(StateUtil.class);
 	}
 
 	private void setExpectations() {

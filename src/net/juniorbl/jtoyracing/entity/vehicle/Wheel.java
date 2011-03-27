@@ -41,16 +41,6 @@ public class Wheel extends Node {
 	private static final float MASS = 4;
 
 	/**
-	 * Direction of traction axis.
-	 */
-	private static final Vector3f TRACTION_AXIS_DIRECTION = new Vector3f(0, 0, 1);
-
-	/**
-	 * Direction of steer axis.
-	 */
-	private static final Vector3f STEER_AXIS_DIRECTION = new Vector3f(0, 1, 0);
-
-	/**
 	 * Acceleration of the traction.
 	 */
 	private static final float TRACTION_ACCELERATION = 150;
@@ -111,7 +101,7 @@ public class Wheel extends Node {
 	 */
 	private void createTractionAxis(Joint tireBaseJoint) {
 		tractionAxis = tireBaseJoint.createRotationalAxis();
-		tractionAxis.setDirection(TRACTION_AXIS_DIRECTION);
+		tractionAxis.setDirection(Vector3f.UNIT_X);
 		tractionAxis.setRelativeToSecondObject(true);
 		tractionAxis.setAvailableAcceleration(TRACTION_ACCELERATION);
 	}
@@ -121,7 +111,7 @@ public class Wheel extends Node {
 	 */
 	private void createSteerAxis(Joint tireBaseJoint) {
 		steerAxis = tireBaseJoint.createRotationalAxis();
-		steerAxis.setDirection(STEER_AXIS_DIRECTION);
+		steerAxis.setDirection(Vector3f.UNIT_Y);
 		steerAxis.setAvailableAcceleration(STEER_ACCELERATION);
 		unsteer();
 	}

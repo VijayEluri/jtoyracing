@@ -10,7 +10,9 @@ import net.juniorbl.jtoyracing.enums.ResourcesPath;
 import net.juniorbl.jtoyracing.util.ModelUtil;
 import net.juniorbl.jtoyracing.util.StateUtil;
 
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.scene.shape.Box;
 import com.jmex.audio.AudioTrack;
@@ -32,6 +34,11 @@ public class Vehicle extends Node implements Health {
 	public static final int MAX_VALUE_HEALTH = 500;
 
 	/**
+	 * Scale of the collision box of the chassis.
+	 */
+	private static final float CHASSIS_COLLISION_BOX_SCALE = 0.5f;
+
+	/**
 	 * Minimum health value.
 	 */
 	private static final int MIN_VALUE_HEALTH = 0;
@@ -49,7 +56,7 @@ public class Vehicle extends Node implements Health {
 	/**
 	 * Scale of the chassis.
 	 */
-	private static final float CHASSIS_SCALE = .5f;
+	private static final float CHASSIS_SCALE = 1f;
 
 	/**
 	 * Mass of the chassis.
@@ -96,26 +103,55 @@ public class Vehicle extends Node implements Health {
 	 */
 	private AudioTrack engineSound;
 
-	public Vehicle(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
+	/**
+	 * Quaternion to apply rotation on the vehicle.
+	 */
+	private Quaternion rotationQuaternion = new Quaternion();
+
+	public Vehicle(PhysicsSpace physicsSpace, ColorRGBA color) {
 		health = MAX_VALUE_HEALTH;
-		createChassis(physicsSpace, chassisLocation);
+		createChassis(physicsSpace, color);
 		createSuspension(physicsSpace);
 		loadEngineSound();
 	}
 
-	private void createChassis(PhysicsSpace physicsSpace, Vector3f chassisLocation) {
+	private void createChassis(PhysicsSpace physicsSpace, ColorRGBA color) {
 		chassis = physicsSpace.createDynamicNode();
-		chassis.setLocalTranslation(chassisLocation);
-		Box chassisCollisionBox = new Box("chassisCollisionBox", new Vector3f(3, .2f, 1.1f), 5.9f, .02f, 1.5f);
-		StateUtil.makeTransparent(chassisCollisionBox);
+		Box chassisCollisionBox = createCollisionBox();
 		chassis.attachChild(chassisCollisionBox);
 		chassis.generatePhysicsGeometry(true);
-		chassis.attachChild(
-				ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/vehicle.obj"));
+		applyColor(color);
 		chassis.setMaterial(Material.IRON);
 		chassis.setLocalScale(CHASSIS_SCALE);
 		chassis.setMass(CHASSIS_MASS);
 		this.attachChild(chassis);
+	}
+
+	/**
+	 * FIXME don't use two model, see how to change a DynamicNode's color.
+	 */
+	private void applyColor(ColorRGBA color) {
+		if (ColorRGBA.red.equals(color)) {
+			chassis.attachChild(
+					ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/redTruck.obj"));
+		} else if (ColorRGBA.blue.equals(color)) {
+			chassis.attachChild(
+					ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/blueTruck.obj"));
+		}
+	}
+
+	/**
+	 * Creates the collision box that is used to simulate the chassis collision.
+	 */
+	private Box createCollisionBox() {
+		final Vector3f collisionBoxLocation = new Vector3f(3, .8f, 1.1f);
+		final float xSize = 5.9f;
+		final int ySize = 1;
+		final float zSize = 1.5f;
+		Box chassisCollisionBox = new Box("chassisCollisionBox", collisionBoxLocation, xSize, ySize, zSize);
+		StateUtil.makeTransparent(chassisCollisionBox);
+		chassisCollisionBox.setLocalScale(CHASSIS_COLLISION_BOX_SCALE);
+		return chassisCollisionBox;
 	}
 
 	private void createSuspension(PhysicsSpace physicsSpace) {
@@ -123,6 +159,12 @@ public class Vehicle extends Node implements Health {
 		this.attachChild(frontSuspension);
 		rearSuspension = new Suspension(physicsSpace, chassis, REAR_SUSPENSION_LOCATION);
 		this.attachChild(rearSuspension);
+	}
+
+	public final void rotateUponItself(Float value) {
+		// FIXME rotateUpTo should do this but it doesn't work.
+		rotationQuaternion.fromAngleNormalAxis(value, Vector3f.UNIT_Y);
+	    this.getLocalRotation().multLocal(rotationQuaternion);
 	}
 
 	public final void accelerate(float desiredVelocity) {
