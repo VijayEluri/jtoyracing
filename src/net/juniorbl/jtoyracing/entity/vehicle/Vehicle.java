@@ -29,6 +29,11 @@ import com.jmex.physics.material.Material;
 public class Vehicle extends Node implements Health {
 
 	/**
+	 * Mass of the chassis.
+	 */
+	public static final float CHASSIS_MASS = 40;
+
+	/**
 	 * Maximum health value.
 	 */
 	public static final int MAX_VALUE_HEALTH = 500;
@@ -59,11 +64,6 @@ public class Vehicle extends Node implements Health {
 	private static final float CHASSIS_SCALE = 1f;
 
 	/**
-	 * Mass of the chassis.
-	 */
-	private static final float CHASSIS_MASS = 40;
-
-	/**
 	 * Location of the front suspension.
 	 */
 	private static final Vector3f FRONT_SUSPENSION_LOCATION = new Vector3f(-.2f, -1.7f, 0);
@@ -74,6 +74,11 @@ public class Vehicle extends Node implements Health {
 	private static final Vector3f REAR_SUSPENSION_LOCATION = new Vector3f(3.2f, -1.6f, 0);
 
 	/**
+	 * Chassis of the vehicle.
+	 */
+	private DynamicPhysicsNode chassis;
+
+	/**
 	 * Health observers.
 	 */
 	private List <HealthObserver> healthObservers = new ArrayList<HealthObserver>();
@@ -82,11 +87,6 @@ public class Vehicle extends Node implements Health {
 	 * Health of the vehicle. The health decreases with time and is recharged when a checkpoint is reached.
 	 */
 	private int health;
-
-	/**
-	 * Chassis of the vehicle.
-	 */
-	private DynamicPhysicsNode chassis;
 
 	/**
 	 * Rear suspension.
@@ -129,6 +129,8 @@ public class Vehicle extends Node implements Health {
 
 	/**
 	 * FIXME don't use two model, see how to change a DynamicNode's color.
+	 *
+	 * FIXME move to StateUtil.
 	 */
 	private void applyColor(ColorRGBA color) {
 		if (ColorRGBA.red.equals(color)) {

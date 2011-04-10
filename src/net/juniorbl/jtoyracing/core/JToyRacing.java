@@ -10,6 +10,7 @@ import net.juniorbl.jtoyracing.core.monitor.HealthChronometer;
 import net.juniorbl.jtoyracing.core.monitor.HealthMonitor;
 import net.juniorbl.jtoyracing.core.monitor.HealthObserver;
 import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
+import net.juniorbl.jtoyracing.entity.vehicle.ComputerVehicle;
 import net.juniorbl.jtoyracing.entity.vehicle.Steer;
 import net.juniorbl.jtoyracing.entity.vehicle.Traction;
 import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
@@ -19,6 +20,7 @@ import net.juniorbl.jtoyracing.util.StateUtil;
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
 import com.jme.light.PointLight;
+import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.scene.state.CullState;
@@ -68,7 +70,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	private static final Vector3f CAMERA_LOCATION = new Vector3f(-40, 0, 163);
 
 	/**
-	 * Normal gravity.
+	 * Normal gravity, uses the Y axis.
 	 */
 	private static final Vector3f NORMAL_GRAVITY = new Vector3f(0, -45, 0);
 
@@ -83,9 +85,14 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	private VehicleChaseCamera vehicleChaseCamera;
 
 	/**
-	 * Vehicle of the game.
+	 * Vehicle controlled by the player.
 	 */
 	private Vehicle vehicle;
+
+	/**
+	 * Vehicle controlled by the computer.
+	 */
+	private ComputerVehicle computerVehicle;
 
 	/**
 	 * First level of the game.
@@ -157,10 +164,22 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		vehicleChaseCamera.update(tpf);
 		audio.update();
 		updateEngineSounds();
+		updateComputerVehiclePosition();
+	}
+
+	private void updateComputerVehiclePosition() {
+		// test target: -40f, -28.2f, 70f (just a few meters in front of the starting line)
+		Vector2f testTarget = new Vector2f(-40, 70);
+		computerVehicle.goTo(testTarget);
+		Vector3f newPosition = new Vector3f(computerVehicle.getCurrentPosition().x,
+				kidsRoom.getGridPosition(GridPosition.SECOND).getY(),
+				computerVehicle.getCurrentPosition().y);
+		computerVehicle.setLocalTranslation(newPosition);
 	}
 
 	private void updateEngineSounds() {
 		vehicle.updateEngineSound();
+		computerVehicle.updateEngineSound();
 	}
 
 	public void updateVehiclesHealth() {
@@ -177,7 +196,13 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void loadComputerVehicle() {
-		Vehicle computerVehicle = new Vehicle(getPhysicsSpace(), ColorRGBA.blue);
+		// The initial position uses the Z axis instead of the Y because in a 3D space the X and Z axes
+		// are in the plane of the ground, the Y axis is the "up" and it's used for gravity
+		// (from "Artificial Intelligence for Games" by Ian Millington).
+		Vector2f initialPosition = new Vector2f(
+				kidsRoom.getGridPosition(GridPosition.SECOND).getX(),
+				kidsRoom.getGridPosition(GridPosition.SECOND).getZ());
+		computerVehicle = new ComputerVehicle(getPhysicsSpace(), initialPosition, ColorRGBA.blue);
 		computerVehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.SECOND));
 	    computerVehicle.rotateUponItself(-1.6f);
 		computerVehicle.addObserver(this);
@@ -215,12 +240,10 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 				KeyInput.KEY_UP, InputHandler.AXIS_NONE, false);
 		input.addAction(new Traction(vehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_DOWN, InputHandler.AXIS_NONE, false);
-		input.addAction(new Steer(vehicle, LEFT_STEER_DIRECTION),
-				InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_LEFT,
-				InputHandler.AXIS_NONE, false);
-		input.addAction(new Steer(vehicle, RIGHT_STEER_DIRECTION),
-				InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_RIGHT,
-				InputHandler.AXIS_NONE, false);
+		input.addAction(new Steer(vehicle, LEFT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
+				KeyInput.KEY_LEFT, InputHandler.AXIS_NONE, false);
+		input.addAction(new Steer(vehicle, RIGHT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
+				KeyInput.KEY_RIGHT, InputHandler.AXIS_NONE, false);
 
 		CameraPositionHandler cameraPositionHandler = new CameraPositionHandler(vehicleChaseCamera);
 		input.addAction(cameraPositionHandler, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_V, InputHandler.AXIS_NONE, false);
