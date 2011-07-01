@@ -10,7 +10,7 @@
  	* mass and material fix **(done)**
  * initial camera location fix **(done)**
  * chassis collision detection fix **(done)**
- * add a second vehicle
+ * add a second vehicle **(done)**
 
 #0.3
  * HUD information
