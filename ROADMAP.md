@@ -18,6 +18,7 @@
  	* countdown before the race starts
  	* _time left: xx seconds_ fix
  	* title screen at the beginning
+ * improve the AI
 
 #0.4
  * wind-up challenge before the race
