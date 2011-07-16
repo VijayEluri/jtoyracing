@@ -163,9 +163,9 @@ public class Vehicle extends Node implements Health {
 		this.attachChild(rearSuspension);
 	}
 
-	public final void rotateUponItself(Float value) {
+	public final void rotateUponItself(Float radians) {
 		// FIXME rotateUpTo should do this but it doesn't work.
-		rotationQuaternion.fromAngleNormalAxis(value, Vector3f.UNIT_Y);
+		rotationQuaternion.fromAngleNormalAxis(radians, Vector3f.UNIT_Y);
 	    this.getLocalRotation().multLocal(rotationQuaternion);
 	}
 

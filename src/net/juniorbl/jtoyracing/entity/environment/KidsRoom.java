@@ -11,6 +11,7 @@ import com.jme.bounding.BoundingVolume;
 import com.jme.image.Texture;
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;
+import com.jme.scene.shape.Quad;
 import com.jme.scene.state.TextureState;
 import com.jme.util.TextureManager;
 import com.jmex.physics.PhysicsSpace;
@@ -26,6 +27,12 @@ import com.jmex.terrain.util.MidPointHeightMap;
  * @author Carlos Luz Junior
  */
 public class KidsRoom extends Node {
+
+	private static final int ROOM_WIDTH = 162;
+
+	private static final int ROOM_HEIGHT = 100;
+
+	private static final int ROOM_LENGTH = 279;
 
 	/**
 	 * serialVersionUID.
@@ -58,17 +65,12 @@ public class KidsRoom extends Node {
 	private RaceTrack raceTrack;
 
 	/**
-	 * Wall of the room.
-	 */
-	private Node wall;
-
-	/**
 	 * Constructs a Room. It uses physicsSpace states and renderer to build its components.
 	 */
 	public KidsRoom(PhysicsSpace physicsSpace, TextureState textureState) {
 		createFloor(physicsSpace, textureState);
 		createRaceTrack(physicsSpace);
-		createWall(physicsSpace);
+		createWall();
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);
 	}
@@ -105,20 +107,38 @@ public class KidsRoom extends Node {
 		this.attachChild(raceTrack);
 	}
 
-	/**
-	 * FIXME use 4 Quad.
-	 */
-	private void createWall(PhysicsSpace physicsSpace) {
-		StaticPhysicsNode physicWallProperties = physicsSpace.createStaticNode();
-		physicWallProperties.setLocalTranslation(new Vector3f(0, -30, 30));
-		physicWallProperties.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/wall.obj"));
-		physicWallProperties.setMaterial(Material.GHOST);
-		physicWallProperties.setLocalScale(11f);
-		physicWallProperties.generatePhysicsGeometry();
-		wall = new Node("wall");
-		wall.attachChild(physicWallProperties);
-		wall.setLocalTranslation(new Vector3f(67, getFloorHeight() + 30, -28));
-		this.attachChild(wall);
+	private void createWall() {
+		createLeftWall();
+		createRightWall();
+		createBackWall();
+		createFrontWall();
+	}
+
+	private void createFrontWall() {
+		Quad frontWall = new Quad("frontWall", ROOM_WIDTH, ROOM_HEIGHT);
+		frontWall.setLocalTranslation(new Vector3f(278, getFloorHeight() + 50, 80));
+		frontWall.setLocalRotation(ModelUtil.calculateRotation(270));
+		this.attachChild(frontWall);
+	}
+
+	private void createBackWall() {
+		Quad backWall = new Quad("backWall", ROOM_WIDTH, ROOM_HEIGHT);
+		backWall.setLocalTranslation(new Vector3f(0, getFloorHeight() + 50, 81));
+		backWall.setLocalRotation(ModelUtil.calculateRotation(90));
+		this.attachChild(backWall);
+	}
+
+	private void createRightWall() {
+		Quad rightWall = new Quad("rightWall", ROOM_LENGTH, ROOM_HEIGHT);
+		rightWall.setLocalTranslation(new Vector3f(139, getFloorHeight() + 50, 161));
+		rightWall.setLocalRotation(ModelUtil.calculateRotation(180));
+		this.attachChild(rightWall);
+	}
+
+	private void createLeftWall() {
+		Quad leftWall = new Quad("leftWall", ROOM_LENGTH, ROOM_HEIGHT);
+		leftWall.setLocalTranslation(new Vector3f(139, getFloorHeight() + 50, 0));
+		this.attachChild(leftWall);
 	}
 
 	/**

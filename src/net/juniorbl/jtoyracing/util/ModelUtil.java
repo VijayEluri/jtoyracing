@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import com.jme.bounding.BoundingBox;
+import com.jme.math.FastMath;
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.scene.TriMesh;
@@ -89,5 +92,12 @@ public final class ModelUtil {
 			throw new Error(e);
 		}
 		return model;
+	}
+
+	public static Quaternion calculateRotation(int degrees) {
+		Quaternion quaternion = new Quaternion();
+		float radians = degrees * FastMath.DEG_TO_RAD;
+		quaternion.fromAngleAxis(radians, Vector3f.UNIT_Y);
+		return quaternion;
 	}
 }
