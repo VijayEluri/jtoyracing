@@ -67,15 +67,12 @@ public class KidsRoom extends Node {
 	 */
 	public KidsRoom(PhysicsSpace physicsSpace, TextureState textureState) {
 		createFloor(physicsSpace, textureState);
-		loadRaceTrack(physicsSpace);
+		createRaceTrack(physicsSpace);
 		createWall(physicsSpace);
 		createRoomObjects(physicsSpace);
 		this.setLocalTranslation(LOCATION);
 	}
 
-	/**
-	 * Creates the floor of the room.
-	 */
 	private void createFloor(PhysicsSpace physicsSpace, TextureState textureState) {
 		MidPointHeightMap mapHeight = new MidPointHeightMap(32, 5f);
 		floorBlock = new TerrainBlock("terrain", mapHeight.getSize(),
@@ -103,14 +100,12 @@ public class KidsRoom extends Node {
 		floorBlock.setRenderState(textureState);
 	}
 
-	private void loadRaceTrack(PhysicsSpace physicsSpace) {
+	private void createRaceTrack(PhysicsSpace physicsSpace) {
 		raceTrack = new RaceTrack(physicsSpace, getFloorHeight());
 		this.attachChild(raceTrack);
 	}
 
 	/**
-	 * Creates the wall.
-	 *
 	 * FIXME use 4 Quad.
 	 */
 	private void createWall(PhysicsSpace physicsSpace) {
@@ -133,9 +128,6 @@ public class KidsRoom extends Node {
 		return raceTrack.isVehicleReachedCheckpoint(vehicleBoundingVolume);
 	}
 
-	/**
-	 * Gets the floor height.
-	 */
 	public final float getFloorHeight() {
 		return floorBlock.getHeight(new Vector3f());
 	}
@@ -145,32 +137,25 @@ public class KidsRoom extends Node {
 	 */
 	private void createLegoDoll(PhysicsSpace physicsSpace) {
 		StaticPhysicsNode legoDoll = physicsSpace.createStaticNode();
-		legoDoll.setModelBound(new BoundingBox());
 		legoDoll.setLocalTranslation(new Vector3f(200, getFloorHeight() + 3.9f, 30));
 		legoDoll.attachChild(ModelUtil.convertMultipleModelToJME(
 				ResourcesPath.MODELS_PATH + "obj/legoDoll.obj"));
-		legoDoll.setMaterial(Material.IRON);
 		final float legoDollScale = 2.5f;
 		legoDoll.setLocalScale(legoDollScale);
-		legoDoll.generatePhysicsGeometry();
 		this.attachChild(legoDoll);
 	}
 
-	/**
-	 * Creates the objects that completes the room.
-	 *
-	 * FIXME don't load the objects as one big model.
-	 */
 	private void createRoomObjects(PhysicsSpace physicsSpace) {
-		StaticPhysicsNode roomObjects = physicsSpace.createStaticNode();
-		roomObjects.setModelBound(new BoundingBox());
-		roomObjects.setLocalTranslation(new Vector3f(20, getFloorHeight(), 55));
-		roomObjects.attachChild(
-				ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/roomObjects.obj"));
-		roomObjects.setMaterial(Material.GHOST);
-		roomObjects.setLocalScale(1f);
+		createBed(physicsSpace);
 		createLegoDoll(physicsSpace);
-		this.attachChild(roomObjects);
+	}
+
+	private void createBed(PhysicsSpace physicsSpace) {
+		StaticPhysicsNode bed = physicsSpace.createStaticNode();
+		bed.setLocalTranslation(new Vector3f(235, getFloorHeight(), 130));
+		bed.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/bed.obj"));
+		bed.setLocalScale(0.3f);
+		this.attachChild(bed);
 	}
 
 	public final Vector3f getGridPosition(GridPosition position) {
