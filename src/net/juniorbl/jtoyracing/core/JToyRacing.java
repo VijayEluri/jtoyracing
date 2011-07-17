@@ -291,7 +291,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	 * Loads the room, first level of the game.
 	 */
 	private void loadRoom() {
-		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer().createTextureState());
+		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
 		kidsRoom.attachChild(vehicle);
 		rootNode.attachChild(kidsRoom);
 	}

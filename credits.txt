@@ -1,3 +1,7 @@
-3D models
+3D MODELS
 
 Bed: M6 Bed by Designconnected (modified) - http://www.turbosquid.com/3d-models/free-m6-bed-3d-model/463119
+
+TEXTURES
+
+Room (wall): Free Photoshop Textures - http://www.photoshoptextures.com
