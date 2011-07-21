@@ -175,6 +175,8 @@ public class KidsRoom extends Node {
 		createComputer();
 		createChair();
 		createLegoDoll();
+		createTV();
+		createTable();
 	}
 
 	private void createBed() {
@@ -206,6 +208,22 @@ public class KidsRoom extends Node {
 		StaticPhysicsNode computer = createRoomObject(
 				new Vector3f(80, getFloorHeight() + 24, 40), "obj/computer.obj", computerScale);
 		this.attachChild(computer);
+	}
+
+	private void createTV() {
+		final float tvScale = 5;
+		StaticPhysicsNode tv = createRoomObject(
+				new Vector3f(230, getFloorHeight() + 7, 10), "obj/TV.obj", tvScale);
+		this.attachChild(tv);
+	}
+
+	private void createTable() {
+		StaticPhysicsNode table = physicsSpace.createStaticNode();
+		table.setLocalTranslation(new Vector3f(230, getFloorHeight(), 15));
+		table.attachChild(ModelUtil.convertModelSimpleObjToJME(ResourcesPath.MODELS_PATH + "obj/table.obj"));
+		final float tableScale = 10;
+		table.setLocalScale(tableScale);
+		this.attachChild(table);
 	}
 
 	private StaticPhysicsNode createRoomObject(Vector3f objectTranslation, String modelPath, Float objectScale) {

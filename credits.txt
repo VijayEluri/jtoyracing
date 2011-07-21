@@ -5,6 +5,8 @@ Bed: M6 Bed by Designconnected (modified) - http://www.turbosquid.com/3d-models/
 Desk: Magazine table by TripRay company (modified) - http://www.turbosquid.com/3d-models/free-max-mode-table-company/459453
 Chair: Meeting room chairs by lauris71 - http://www.turbosquid.com/3d-models/free-obj-model-office-chairs/581904
 Computer: Desktop by danitheking (modified) - http://www.turbosquid.com/3d-models/monitor-keyboard-mouse-3d-blend/509813
+TV: Free HDTV LWO.zip by 3DGold - http://www.turbosquid.com/3d-models/free-obj-model-h-d-t/487354
+Table: Table017.ZIP by Fworx (modified) - http://www.turbosquid.com/3d-models/free-table-3d-model/200791
 
 TEXTURES
 
