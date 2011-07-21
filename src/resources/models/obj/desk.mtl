@@ -1,0 +1,23 @@
+# Blender3D MTL File: desk.blend
+# Material Count: 2
+newmtl tbl012_wood__Vra
+Ns 29.411765
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.449019 0.449019 0.449019
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd TBL01201.jpg
+
+
+newmtl tbl012_metall__V
+Ns 1000.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.398431 0.398431 0.398431
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
