@@ -60,7 +60,7 @@ public class KidsRoom extends Node {
 		this.setLocalTranslation(LOCATION);
 		createFloor();
 		createRaceTrack();
-		createWall();
+		createWalls();
 		createRoomObjects();
 	}
 
@@ -97,7 +97,7 @@ public class KidsRoom extends Node {
 		this.attachChild(raceTrack);
 	}
 
-	private void createWall() {
+	private void createWalls() {
 		createLeftWall();
 		createRightWall();
 		createBackWall();
@@ -172,6 +172,7 @@ public class KidsRoom extends Node {
 	private void createRoomObjects() {
 		createBed();
 		createDesk();
+		createComputer();
 		createChair();
 		createLegoDoll();
 	}
@@ -186,22 +187,33 @@ public class KidsRoom extends Node {
 	}
 
 	private void createDesk() {
-		StaticPhysicsNode desk = physicsSpace.createStaticNode();
-		desk.setLocalTranslation(new Vector3f(80, getFloorHeight(), 20.5f));
-		desk.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/desk.obj"));
-		final float deskScale = 19f;
-		desk.setLocalScale(deskScale);
+		final float deskScale = 19;
+		StaticPhysicsNode desk = createRoomObject(
+				new Vector3f(80, getFloorHeight(), 20.5f), "obj/desk.obj", deskScale);
 		this.attachChild(desk);
 	}
 
 	private void createChair() {
-		StaticPhysicsNode chair = physicsSpace.createStaticNode();
-		chair.setLocalTranslation(new Vector3f(80, getFloorHeight(), 50));
-		chair.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/chair.obj"));
-		final float chairScale = 17f;
-		chair.setLocalScale(chairScale);
+		final float chairScale = 17;
+		StaticPhysicsNode chair = createRoomObject(
+				new Vector3f(80, getFloorHeight(), 50), "obj/chair.obj", chairScale);
 		chair.setLocalRotation(ModelUtil.calculateRotation(90));
 		this.attachChild(chair);
+	}
+
+	private void createComputer() {
+		final float computerScale = 1.5f;
+		StaticPhysicsNode computer = createRoomObject(
+				new Vector3f(80, getFloorHeight() + 24, 40), "obj/computer.obj", computerScale);
+		this.attachChild(computer);
+	}
+
+	private StaticPhysicsNode createRoomObject(Vector3f objectTranslation, String modelPath, Float objectScale) {
+		StaticPhysicsNode object = physicsSpace.createStaticNode();
+		object.setLocalTranslation(objectTranslation);
+		object.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + modelPath));
+		object.setLocalScale(objectScale);
+		return object;
 	}
 
 	public final Vector3f getGridPosition(GridPosition position) {
