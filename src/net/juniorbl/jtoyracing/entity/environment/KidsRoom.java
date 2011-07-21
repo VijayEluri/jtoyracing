@@ -172,6 +172,7 @@ public class KidsRoom extends Node {
 	private void createRoomObjects() {
 		createBed();
 		createDesk();
+		createChair();
 		createLegoDoll();
 	}
 
@@ -191,6 +192,16 @@ public class KidsRoom extends Node {
 		final float deskScale = 19f;
 		desk.setLocalScale(deskScale);
 		this.attachChild(desk);
+	}
+
+	private void createChair() {
+		StaticPhysicsNode chair = physicsSpace.createStaticNode();
+		chair.setLocalTranslation(new Vector3f(80, getFloorHeight(), 50));
+		chair.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/chair.obj"));
+		final float chairScale = 17f;
+		chair.setLocalScale(chairScale);
+		chair.setLocalRotation(ModelUtil.calculateRotation(90));
+		this.attachChild(chair);
 	}
 
 	public final Vector3f getGridPosition(GridPosition position) {
