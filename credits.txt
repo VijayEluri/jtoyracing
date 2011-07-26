@@ -8,8 +8,10 @@ Computer: Desktop by danitheking (modified) - http://www.turbosquid.com/3d-model
 TV: Free HDTV LWO.zip by 3DGold - http://www.turbosquid.com/3d-models/free-obj-model-h-d-t/487354
 Table: Table017.ZIP by Fworx (modified) - http://www.turbosquid.com/3d-models/free-table-3d-model/200791
 
-TEXTURES
+TEXTURES AND IMAGES
 
 Room (floor): (?)
 Room (wall objects): Free Photoshop Textures - http://www.photoshoptextures.com
+Super Mario poster: Nintendo's Super Mario Poster (preview image) - http://www.popartuk.com/general/super-mario/super-mario-fp1945-poster.asp
+Kid: Rigged Cartoon Kid 01 by Denys Almaral (preview image) (modified) - http://www.turbosquid.com/3d-models/cartoon-boy-kid-3d-max/490635
 
