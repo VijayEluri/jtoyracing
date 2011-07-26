@@ -108,9 +108,9 @@ public class KidsRoom extends Node {
 		Quad frontWall = new Quad("frontWall", ROOM_WIDTH, ROOM_HEIGHT);
 		frontWall.setLocalTranslation(new Vector3f(278, getFloorHeight() + 50, 80));
 		frontWall.setLocalRotation(ModelUtil.calculateRotation(270));
-		this.attachChild(frontWall);
 		String frontWallTexture = "front-wall-texture";
 		loadWallTexture(frontWall, frontWallTexture);
+		this.attachChild(frontWall);
 	}
 
 	private void createBackWall() {
@@ -124,14 +124,16 @@ public class KidsRoom extends Node {
 		Quad rightWall = new Quad("rightWall", ROOM_LENGTH, ROOM_HEIGHT);
 		rightWall.setLocalTranslation(new Vector3f(139, getFloorHeight() + 50, 161));
 		rightWall.setLocalRotation(ModelUtil.calculateRotation(180));
-		this.attachChild(rightWall);
 		String rightWallTexture = "right-wall-texture";
 		loadWallTexture(rightWall, rightWallTexture);
+		this.attachChild(rightWall);
 	}
 
 	private void createLeftWall() {
 		Quad leftWall = new Quad("leftWall", ROOM_LENGTH, ROOM_HEIGHT);
 		leftWall.setLocalTranslation(new Vector3f(139, getFloorHeight() + 50, 0));
+		String leftWallTexture = "left-wall-texture";
+		loadWallTexture(leftWall, leftWallTexture);
 		this.attachChild(leftWall);
 	}
 

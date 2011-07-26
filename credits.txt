@@ -1,6 +1,7 @@
 3D MODELS
 
 Monster Truck: (?)
+Lego doll: (?)
 Bed: M6 Bed by Designconnected (modified) - http://www.turbosquid.com/3d-models/free-m6-bed-3d-model/463119
 Desk: Magazine table by TripRay company (modified) - http://www.turbosquid.com/3d-models/free-max-mode-table-company/459453
 Chair: Meeting room chairs by lauris71 - http://www.turbosquid.com/3d-models/free-obj-model-office-chairs/581904
@@ -10,8 +11,8 @@ Table: Table017.ZIP by Fworx (modified) - http://www.turbosquid.com/3d-models/fr
 
 TEXTURES AND IMAGES
 
-Room (floor): (?)
+Floor: (?)
 Room (wall objects): Free Photoshop Textures - http://www.photoshoptextures.com
-Super Mario poster: Nintendo's Super Mario Poster (preview image) - http://www.popartuk.com/general/super-mario/super-mario-fp1945-poster.asp
-Kid: Rigged Cartoon Kid 01 by Denys Almaral (preview image) (modified) - http://www.turbosquid.com/3d-models/cartoon-boy-kid-3d-max/490635
-
+Super Mario poster (wall): Nintendo's Super Mario Poster (preview image) - http://www.popartuk.com/general/super-mario/super-mario-fp1945-poster.asp
+Kid (wall): Rigged Cartoon Kid 01 by Denys Almaral (preview image) (modified) - http://www.turbosquid.com/3d-models/cartoon-boy-kid-3d-max/490635
+Family (wall): 3DRT-Toonworld-family-ver.1.0 by 3DRT (preview images) (modified) - http://www.turbosquid.com/FullPreview/Index.cfm/ID/535883
