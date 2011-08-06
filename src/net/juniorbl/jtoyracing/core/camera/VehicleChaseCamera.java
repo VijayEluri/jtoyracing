@@ -16,39 +16,16 @@ import com.jme.scene.Spatial;
  */
 public final class VehicleChaseCamera extends ChaseCamera {
 
-	/**
-	 * Far distance from the car.
-	 */
 	private static final int FAR_DISTANCE = 50;
 
-	/**
-	 * Close distance from the car.
-	 */
 	private static final int CLOSE_DISTANCE = 30;
 
-	/**
-	 * Vehicle chase camera.
-	 */
 	private static ChaseCamera vehicleChaseCamera;
 
-	/**
-	 * Constructs a vehicle camera.
-	 *
-	 * @param camera the original camera.
-	 * @param vehicleToFollow a vehicle to follow.
-	 * @param properties the camera properties.
-	 */
 	private VehicleChaseCamera(Camera camera, Spatial vehicleToFollow, HashMap properties) {
 		super(camera, vehicleToFollow, properties);
 	}
 
-	/**
-	 * Return a instance of vehicle camera.
-	 *
-	 * @param camera an original camera.
-	 * @param vehicleToFollow a vehicle to follow.
-	 * @return instance of vehicle camera.
-	 */
 	public static ChaseCamera getInstance(Camera camera, Spatial vehicleToFollow) {
 		HashMap properties = loadProperties();
 		vehicleChaseCamera = new VehicleChaseCamera(camera, vehicleToFollow, properties);
@@ -58,11 +35,6 @@ public final class VehicleChaseCamera extends ChaseCamera {
 		return vehicleChaseCamera;
 	}
 
-	/**
-	 * Loads the initial properties for the camera.
-	 *
-	 * @return the properties loaded.
-	 */
 	private static HashMap<String, Object> loadProperties() {
 		Vector3f targetOffset = new Vector3f();
 		targetOffset.y = 4;
@@ -73,9 +45,6 @@ public final class VehicleChaseCamera extends ChaseCamera {
 		return properties;
 	}
 
-	/**
-	 * Modify the player's vision by changing the distance of the camera from the car.
-	 */
 	public void changeVision() {
 		if (vehicleChaseCamera != null) {
 			if (vehicleChaseCamera.getMaxDistance() == FAR_DISTANCE) {

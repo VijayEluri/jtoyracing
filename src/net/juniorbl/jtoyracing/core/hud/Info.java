@@ -27,106 +27,46 @@ import com.jme.util.geom.BufferUtils;
  */
 public class Info extends Node {
 
-	/**
-	 * serialVersionUID.
-	 */
 	private static final long serialVersionUID = -7326797374588827635L;
 
-	/**
-	 * Height of the health symbol.
-	 */
 	private static final float HEALTH_SYMBOL_HEIGHT = 40f;
 
-	/**
-	 * Width of the health symbol.
-	 */
 	private static final float HEALTH_SYMBOL_WIDTH = 40f;
 
-	/**
-	 * Location of the message information on the screen.
-	 */
 	private static final Vector3f TEXT_INFO_LOCATION = new Vector3f(0, 85, 0);
 
-	/**
-	 * Location of the health bar.
-	 */
 	private static final Vector3f HEALTH_BAR_LOCATION = new Vector3f(80, 65, 0);
 
-	/**
-	 * Width of the bar's border.
-	 */
 	private static final int BAR_BORDER_WIDTH = 96;
 
-	/**
-	 * Height of the bar's border.
-	 */
 	private static final int BAR_BORDER_HEIGHT = 13;
 
-	/**
-	 * Width of the health bar.
-	 */
 	private static final int HEALTH_BAR_WIDTH = 94;
 
-	/**
-	 * Height of the health bar.
-	 */
 	private static final int HEALTH_BAR_HEIGHT = 11;
 
-	/**
-	 * Location of the health symbol.
-	 */
 	private static final Vector3f HEALTH_SYMBOL_LOCATION = new Vector3f(25, 55, 0);
 
-	/**
-	 * First pixel, first from above, of the bar.
-	 */
 	private static final int BAR_FIRST_PIXEL = 53;
 
-	/**
-	 * Last pixel, first from above, of the bar.
-	 */
 	private static final int BAR_LAST_PIXEL = 63;
 
-	/**
-	 * Symbol of the health.
-	 */
 	private Quad healthSymbol;
 
-	/**
-	 * Borders of the bar.
-	 */
 	private Quad barBorders;
 
-	/**
-	 * A health bar.
-	 */
 	private Quad healthBar;
 
-	/**
-	 * Object which holds the text information.
-	 */
 	private Text textInfo;
 
-	/**
-	 * Node which represents the health bar.
-	 */
 	private Node healthBarNode;
 
-	/**
-	 * Max value of the health bar.
-	 */
 	private int maxHealthBarValue;
 
-	/**
-	 * Height of the health bar.
-	 */
 	private int healthBarTextureHeight;
 
 	/**
 	 * Info uses a renderer to create texture and alpha states. A vehicle's health is used in the health bar.
-	 *
-	 * @param renderer the renderer.
-	 * @param vehicleHealth vehicle's health.
 	 */
 	public Info(Renderer renderer, Integer vehicleHealth) {
 		this.maxHealthBarValue = vehicleHealth;
@@ -142,9 +82,6 @@ public class Info extends Node {
 		startTextInformation();
 	}
 
-	/**
-	 * Starts the text information.
-	 */
 	private void startTextInformation() {
 		textInfo = new Text("textNode", "");
 		textInfo.setTextColor(ColorRGBA.red);
@@ -152,11 +89,6 @@ public class Info extends Node {
 		this.attachChild(textInfo);
 	}
 
-	/**
-	 * Prints a message on the screen.
-	 *
-	 * @param message the message to be printed.
-	 */
 	public final void printMessage(String message) {
 		textInfo.print(message);
 	}
@@ -164,8 +96,6 @@ public class Info extends Node {
 	/**
 	 * Creates the health bar. This bar shows the amount of health each car has available for the race
 	 * at some moment.
-	 *
-	 * @param textureState the texture state.
 	 */
 	private void createHealthBar(TextureState textureState) {
 		healthBarNode = new Node();
@@ -187,13 +117,6 @@ public class Info extends Node {
 				healthBarTextureWidth, healthBarTextureHeight));
 	}
 
-	/**
-	 * Loads a texture state according to a given image path.
-	 *
-	 * @param textureState a texture state.
-	 * @param imagePath a image path.
-	 * @return the texture state.
-	 */
 	private TextureState loadTextureState(TextureState textureState, String imagePath) {
 		textureState.setTexture(TextureManager.loadTexture(getClass()
 				.getClassLoader().getResource(imagePath),
@@ -202,15 +125,6 @@ public class Info extends Node {
 		return textureState;
 	}
 
-	/**
-	 * Creates coordinates for the texture according to a given width and height.
-	 *
-	 * @param imageWidth the width of an image.
-	 * @param imageHeight the height of an image.
-	 * @param textureWidth the width of a texture.
-	 * @param textureHeight the height of a texture.
-	 * @return the texture coordinates represented as a FloatBuffer.
-	 */
 	private FloatBuffer createTextureCoordinates(int imageWidth, int imageHeight, int textureWidth, int textureHeight) {
 		FloatBuffer textureCoordinates = BufferUtils.createVector2Buffer(4);
 		textureCoordinates.put((float) 0 / textureWidth).put(1f - (float) 0 / textureHeight);
@@ -221,9 +135,7 @@ public class Info extends Node {
 	}
 
 	/**
-	 * Creates an alpha state to not show transparency of images.
-	 *
-	 * @param alphaState the alpha state.
+	 * FIXME move to stateutil
 	 */
 	private void createTransparency(AlphaState alphaState) {
 		alphaState.setBlendEnabled(true);
@@ -238,11 +150,6 @@ public class Info extends Node {
 		this.attachChild(healthBarNode);
 	}
 
-	/**
-	 * Creates the health symbol.
-	 *
-	 * @param textureState the texture state.
-	 */
 	private void createHealthSymbol(TextureState textureState) {
 		healthSymbol = new Quad("hud", HEALTH_SYMBOL_WIDTH, HEALTH_SYMBOL_HEIGHT);
 		healthSymbol.setRenderQueueMode(Renderer.QUEUE_ORTHO);
@@ -258,16 +165,14 @@ public class Info extends Node {
 		this.attachChild(healthSymbol);
 	}
 
-	/**
-	 * Sets a value in the health bar. Calculates the position of the content according to a given value.
-	 *
-	 * @param healthValue the amount of health.
-	 */
 	public final void setHealthBarValue(int healthValue) {
 		int desiredHealth = healthValue;
 		desiredHealth %= (int) maxHealthBarValue;
 		FloatBuffer coordinates = BufferUtils.createVector2Buffer(4);
-		//Calculate the location
+		calculateContentLocation(desiredHealth, coordinates);
+	}
+
+	private void calculateContentLocation(int desiredHealth, FloatBuffer coordinates) {
 		float relCoord = 0.5f - ((float) desiredHealth / maxHealthBarValue) * 0.5f;
 		coordinates.put(relCoord).put(1f - (float) BAR_FIRST_PIXEL / healthBarTextureHeight);
 		coordinates.put(relCoord).put(1f - (float) BAR_LAST_PIXEL / healthBarTextureHeight);

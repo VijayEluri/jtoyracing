@@ -8,22 +8,9 @@ package net.juniorbl.jtoyracing.core.monitor;
  */
 public interface Health {
 
-    /**
-     * Adds an observer to the set of observers of the car's health.
-     *
-     * @param healthObserver an observer to be added.
-     */
 	void addObserver(HealthObserver healthObserver);
 
-	/**
-	 * Deletes an observer from the set of observers of the car's health.
-	 *
-	 * @param healthObserver an observer to be removed.
-	 */
 	void removeObserver(HealthObserver healthObserver);
 
-	/**
-	 * Notifies the observers when the health ends.
-	 */
 	void notifyObserversHealthEnded();
 }

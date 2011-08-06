@@ -51,9 +51,6 @@ public class KidsRoom extends Node {
 
 	private PhysicsSpace physicsSpace;
 
-	/**
-	 * Constructs a Room. It uses physicsSpace nodes and a renderer to build its components.
-	 */
 	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
 		this.physicsSpace = physicsSpace;
 		this.renderer = renderer;
@@ -147,9 +144,6 @@ public class KidsRoom extends Node {
 		wall.setRenderState(wallTextureState);
 	}
 
-	/**
-	 * Checks whether a vehicle reached a checkpoint of the race track.
-	 */
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {
 		return raceTrack.isVehicleReachedCheckpoint(vehicleBoundingVolume);
 	}
@@ -158,9 +152,6 @@ public class KidsRoom extends Node {
 		return floorTerrainBlock.getHeight(new Vector3f());
 	}
 
-	/**
-	 * Creates the lego doll in bend three.
-	 */
 	private void createLegoDoll() {
 		StaticPhysicsNode legoDoll = physicsSpace.createStaticNode();
 		legoDoll.setLocalTranslation(new Vector3f(200, getFloorHeight() + 3.9f, 30));

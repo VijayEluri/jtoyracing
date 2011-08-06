@@ -11,31 +11,20 @@ import com.jme.input.action.InputActionInterface;
  */
 public class Steer implements InputActionInterface {
 
-	/**
-	 * A vehicle.
-	 */
-	private Vehicle vehicle;
+	private PlayerVehicle vehicle;
 
 	/**
 	 * The direction of the steer, right or left.
 	 */
 	private float direction;
 
-	/**
-	 * Constructs a steer action.
-	 *
-	 * @param vehicle the vehicle.
-	 * @param direction the desired direction.
-	 */
-	public Steer(Vehicle vehicle, float direction) {
+	public Steer(PlayerVehicle vehicle, float direction) {
 		this.vehicle = vehicle;
 		this.direction = direction;
 	}
 
 	/**
-	 * Steers the vehicle right or left.
-	 *
-	 * @param event the event.
+	 * Steers the vehicle.
 	 */
 	public final void performAction(InputActionEvent event) {
 		if (event.getTriggerPressed()) {

@@ -26,96 +26,51 @@ import com.jmex.physics.material.Material;
  * @version 1.0 Aug 11, 2007
  * @author Carlos Luz Junior
  */
-public class Vehicle extends Node implements Health {
+public class PlayerVehicle extends Node implements Health {
 
-	/**
-	 * Mass of the chassis.
-	 */
 	public static final float CHASSIS_MASS = 40;
 
-	/**
-	 * Maximum health value.
-	 */
 	public static final int MAX_VALUE_HEALTH = 500;
 
-	/**
-	 * Scale of the collision box of the chassis.
-	 */
 	private static final float CHASSIS_COLLISION_BOX_SCALE = 0.5f;
 
-	/**
-	 * Minimum health value.
-	 */
 	private static final int MIN_VALUE_HEALTH = 0;
 
-	/**
-	 * serialVersionUID.
-	 */
 	private static final long serialVersionUID = 2049305191562715341L;
 
-	/**
-	 * Amount of health that is decreased.
-	 */
 	private static final int DECREASE_HEALTH_VALUE = 25;
 
-	/**
-	 * Scale of the chassis.
-	 */
 	private static final float CHASSIS_SCALE = 1f;
 
-	/**
-	 * Location of the front suspension.
-	 */
 	private static final Vector3f FRONT_SUSPENSION_LOCATION = new Vector3f(-.2f, -1.7f, 0);
 
-	/**
-	 * Location of the rear suspension.
-	 */
 	private static final Vector3f REAR_SUSPENSION_LOCATION = new Vector3f(3.2f, -1.6f, 0);
 
-	/**
-	 * Chassis of the vehicle.
-	 */
 	private DynamicPhysicsNode chassis;
 
-	/**
-	 * Health observers.
-	 */
 	private List <HealthObserver> healthObservers = new ArrayList<HealthObserver>();
 
-	/**
-	 * Health of the vehicle. The health decreases with time and is recharged when a checkpoint is reached.
-	 */
 	private int health;
 
-	/**
-	 * Rear suspension.
-	 */
 	private Suspension rearSuspension;
 
-	/**
-	 * Front suspension.
-	 */
 	private Suspension frontSuspension;
 
-	/**
-	 * Sound of the engine.
-	 */
 	private AudioTrack engineSound;
 
-	/**
-	 * Quaternion to apply rotation on the vehicle.
-	 */
 	private Quaternion rotationQuaternion = new Quaternion();
 
-	public Vehicle(PhysicsSpace physicsSpace, ColorRGBA color) {
+	private PhysicsSpace physicsSpace;
+
+	public PlayerVehicle(PhysicsSpace physicsSpace, ColorRGBA color) {
+		this.physicsSpace = physicsSpace;
 		health = MAX_VALUE_HEALTH;
-		createChassis(physicsSpace, color);
-		createSuspension(physicsSpace);
+		createChassis(color);
+		createSuspension();
 		loadEngineSound();
 	}
 
-	private void createChassis(PhysicsSpace physicsSpace, ColorRGBA color) {
+	private void createChassis(ColorRGBA color) {
 		chassis = physicsSpace.createDynamicNode();
 		Box chassisCollisionBox = createCollisionBox();
 		chassis.attachChild(chassisCollisionBox);
@@ -156,7 +111,7 @@ public class Vehicle extends Node implements Health {
 		return chassisCollisionBox;
 	}
 
-	private void createSuspension(PhysicsSpace physicsSpace) {
+	private void createSuspension() {
 		frontSuspension = new Suspension(physicsSpace, chassis, FRONT_SUSPENSION_LOCATION);
 		this.attachChild(frontSuspension);
 		rearSuspension = new Suspension(physicsSpace, chassis, REAR_SUSPENSION_LOCATION);
@@ -193,25 +148,17 @@ public class Vehicle extends Node implements Health {
 		}
 	}
 
-	/**
-	 * Verifies whether there is health available or not.
-	 */
 	private boolean hasHealth() {
 		return health > MIN_VALUE_HEALTH;
 	}
 
 	/**
-	 * Update the engine sound depending on the speed.
-	 *
 	 * FIXME turn up the volume is not correct
 	 */
 	public final void updateEngineSound() {
 		engineSound.setVolume((getSpeed() / 40) + .5f);
 	}
 
-	/**
-	 * Returns the current speed.
-	 */
 	private float getSpeed() {
 		return chassis.getLinearVelocity(Vector3f.ZERO).length();
 	}
@@ -241,9 +188,6 @@ public class Vehicle extends Node implements Health {
 		return health;
 	}
 
-	/**
-	 * Decreases the health by a value that depends on the vehicle.
-	 */
 	public final int decreaseHealth() {
 		health -= DECREASE_HEALTH_VALUE;
 		if (!hasHealth()) {
@@ -268,23 +212,14 @@ public class Vehicle extends Node implements Health {
 		engineSound.play();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final void addObserver(final HealthObserver observadorEnergia) {
 		this.healthObservers.add(observadorEnergia);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final void removeObserver(HealthObserver observadorEnergia) {
 		healthObservers.remove(observadorEnergia);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final void notifyObserversHealthEnded() {
 		for (HealthObserver healthObserver : this.healthObservers) {
 			healthObserver.healthEnded();

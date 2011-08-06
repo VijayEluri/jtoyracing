@@ -12,23 +12,12 @@ import com.jme.input.action.InputActionInterface;
  */
 public class CameraPositionHandler implements InputActionInterface {
 
-	/**
-	 * The camera to positionate.
-	 */
 	private VehicleChaseCamera vehicleChaseCamera;
 
-	/**
-	 * Constructors a camera position handler.
-	 *
-	 * @param chaseCamera the chase camera.
-	 */
 	public CameraPositionHandler(VehicleChaseCamera chaseCamera) {
 		this.vehicleChaseCamera = chaseCamera;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public final void performAction(InputActionEvent evt) {
 		if (evt.getTriggerPressed()) {
 			vehicleChaseCamera.changeVision();

@@ -8,8 +8,5 @@ package net.juniorbl.jtoyracing.core.monitor;
  */
 public interface HealthObserver {
 
-	/**
-	 * Notification when the health ends.
-	 */
 	void healthEnded();
 }

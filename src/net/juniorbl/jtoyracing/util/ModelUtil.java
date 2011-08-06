@@ -30,9 +30,6 @@ public final class ModelUtil {
 
 	/**
 	 * Converts a OBJ model into JME model according to a given path.
-	 *
-	 * @param path the path.
-	 * @return the JME model converted.
 	 */
 	private static ByteArrayOutputStream convertModelObjToJME(String path) {
 		ObjToJme converter = new ObjToJme();
@@ -52,9 +49,6 @@ public final class ModelUtil {
 
 	/**
 	 * Converts a simple OBJ model into JME model according to a given path.
-	 *
-	 * @param path the path.
-	 * @return the JME model converted.
 	 */
 	public static TriMesh convertModelSimpleObjToJME(String path) {
 		TriMesh model = null;
@@ -75,9 +69,6 @@ public final class ModelUtil {
 
 	/**
 	 * Converts a multiple OBJ model into JME model according to a given path.
-	 *
-	 * @param path the path.
-	 * @return the JME model converted.
 	 */
 	public static Node convertMultipleModelToJME(String path) {
 		Node model = null;

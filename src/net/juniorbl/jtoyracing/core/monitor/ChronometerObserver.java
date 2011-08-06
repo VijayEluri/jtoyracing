@@ -8,15 +8,7 @@ package net.juniorbl.jtoyracing.core.monitor;
  */
 public interface ChronometerObserver {
 
-    /**
-     * Notification to update time.
-     *
-     * @param time time's value to update.
-     */
 	void updateTime(int time);
 
-    /**
-     * Notification when time's up.
-     */
 	void timeUP();
 }

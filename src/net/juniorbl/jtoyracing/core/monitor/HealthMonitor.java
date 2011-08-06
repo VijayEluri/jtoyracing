@@ -10,28 +10,14 @@ import net.juniorbl.jtoyracing.core.JToyRacing;
  */
 public final class HealthMonitor extends Thread {
 
-	/**
-     * One second in milliseconds.
-     */
 	private static final int ONE_SECOND = 1000;
 
-	/**
-	 * The health of the vehicles are monitored by the main class.
-	 */
 	private JToyRacing jToyRacing;
 
-	/**
-	 * Constructs a heal monitor.
-	 *
-	 * @param jToyRacing the jToyRacings.
-	 */
 	public HealthMonitor(JToyRacing jToyRacing) {
 		this.jToyRacing = jToyRacing;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void run() {
 		try {

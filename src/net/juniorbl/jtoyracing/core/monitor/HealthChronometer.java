@@ -14,38 +14,18 @@ import java.util.List;
  */
 public final class HealthChronometer extends Thread implements Chronometer {
 
-	/**
-     * One second in milliseconds.
-     */
 	private static final int ONE_SECOND = 1000;
 
-	/**
-     * Indication when the chronometer should stop.
-     */
 	private boolean stop;
 
-	/**
-	 * Amount of time in seconds which a car should wait when his health ends.
-	 */
 	private int waitSeconds;
 
-	/**
-	 * List of observers.
-	 */
 	private List<ChronometerObserver> chronometerObservers = new ArrayList<ChronometerObserver>();
 
-	/**
-	 * Constructor used when the chronometer is monitoring the lack of health.
-	 *
-	 * @param seconds seconds a car should wait.
-	 */
 	public HealthChronometer(int seconds) {
 		this.waitSeconds = seconds;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void run() {
 		while (!stop) {
@@ -64,39 +44,24 @@ public final class HealthChronometer extends Thread implements Chronometer {
 		}
 	}
 
-    /**
-     * Stops the chronometer.
-     */
 	public void stopChronometer() {
 		stop = true;
 	}
 
-    /**
-	 * {@inheritDoc}
-	 */
 	public void addObserver(ChronometerObserver observadorCronometro) {
 		chronometerObservers.add(observadorCronometro);
 	}
 
-    /**
-     * {@inheritDoc}
-     */
 	public void removeObserver(ChronometerObserver observadorCronometro) {
 		chronometerObservers.remove(observadorCronometro);
 	}
 
-    /**
-     * {@inheritDoc}
-     */
 	public void notifyObserversUpdateTime(int tempo) {
 		for (ChronometerObserver observadorCronometro : chronometerObservers) {
 			observadorCronometro.updateTime(tempo);
 		}
 	}
 
-    /**
-     * {@inheritDoc}
-     */
 	public void notifyObserversTimeUP() {
 		for (ChronometerObserver observadorCronometro : chronometerObservers) {
 			observadorCronometro.timeUP();

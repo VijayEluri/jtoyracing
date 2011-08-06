@@ -10,7 +10,7 @@ import com.jmex.physics.PhysicsSpace;
  *
  * @author Carlos Luz Junior
  */
-public class ComputerVehicle extends Vehicle {
+public class ComputerVehicle extends PlayerVehicle {
 
 	private Vector2f velocity;
 

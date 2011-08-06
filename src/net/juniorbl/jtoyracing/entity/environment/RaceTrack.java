@@ -23,39 +23,18 @@ import com.jmex.physics.material.Material;
  */
 public class RaceTrack extends Node {
 
-	/**
-	 * X location of the vehicle in the race track.
-	 */
 	public static final float VEHICLE_X_LOCATION = 28.2f;
 
-	/**
-	 * X location of the first grid in the race track.
-	 */
 	private static final int X_LOCATION_FIRST_GRID_POSITION = -50;
 
-	/**
-	 * X location of the second grid in the race track.
-	 */
 	private static final int X_LOCATION_SECOND_GRID_POSITION = -40;
 
-	/**
-	 * serialVersionUID.
-	 */
 	private static final long serialVersionUID = 8801407867521059306L;
 
-	/**
-	 * The actual Track.
-	 */
 	private StaticPhysicsNode track;
 
-	/**
-	 * Checkpoints of the race track.
-	 */
 	private List<StaticPhysicsNode> checkPoints;
 
-	/**
-	 * Constructs a race track. It uses various states to build its components.
-	 */
 	public RaceTrack(PhysicsSpace physicsSpace, Float floorHeight) {
 		Vector3f trackLocation = new Vector3f(20, floorHeight, 55);
 		createTrack(physicsSpace, trackLocation);
@@ -74,12 +53,11 @@ public class RaceTrack extends Node {
 
 	/**
 	 * Creates the checkpoints of the track. Checkpoints are some locations around a race track
-	 * that recharge the health of the cars. It's the same location as the track because
-	 * they are in the same 3D model.
+	 * that recharge the health of the vehicles.
 	 */
 	private void createCheckPoints(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
 		checkPoints = new ArrayList<StaticPhysicsNode>();
-		StaticPhysicsNode bendThreeCheckPoint = createBendCheckpoint(physicsSpace, checkPointsLocation);
+		StaticPhysicsNode bendThreeCheckPoint = createBendThreeCheckpoint(physicsSpace, checkPointsLocation);
 		checkPoints.add(bendThreeCheckPoint);
 		this.attachChild(bendThreeCheckPoint);
 		StaticPhysicsNode startCheckPoint = createStartCheckPoint(physicsSpace, checkPointsLocation);
@@ -87,10 +65,7 @@ public class RaceTrack extends Node {
 		this.attachChild(startCheckPoint);
 	}
 
-	/**
-	 * Bend #3 checkpoint.
-	 */
-	private StaticPhysicsNode createBendCheckpoint(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
+	private StaticPhysicsNode createBendThreeCheckpoint(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
 		StaticPhysicsNode bendThreeCheckPoint = physicsSpace.createStaticNode();
 		bendThreeCheckPoint.setLocalTranslation(checkPointsLocation);
 		bendThreeCheckPoint.attachChild(
@@ -100,9 +75,6 @@ public class RaceTrack extends Node {
 		return bendThreeCheckPoint;
 	}
 
-	/**
-	 * Start checkpoint.
-	 */
 	private StaticPhysicsNode createStartCheckPoint(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
 		StaticPhysicsNode startCheckPoint = physicsSpace.createStaticNode();
 		startCheckPoint.setLocalTranslation(checkPointsLocation);
@@ -113,19 +85,12 @@ public class RaceTrack extends Node {
 		return startCheckPoint;
 	}
 
-	/**
-	 * Configures the checkpoint so that there's no collision with it.
-	 */
 	private void configureCheckPoint(StaticPhysicsNode checkPoint) {
-		checkPoint.generatePhysicsGeometry();
 		checkPoint.setLocalScale(1f);
 		checkPoint.setMaterial(Material.GHOST);
 		StateUtil.makeTransparent(checkPoint);
 	}
 
-	/**
-	 * Checks whether a vehicle reached a checkpoint.
-	 */
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {
 		for (StaticPhysicsNode checkPoint : checkPoints) {
 			if (vehicleBoundingVolume.intersects(checkPoint.getWorldBound())) {

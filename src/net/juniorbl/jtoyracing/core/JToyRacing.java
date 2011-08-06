@@ -1,6 +1,6 @@
 package net.juniorbl.jtoyracing.core;
 
-import static net.juniorbl.jtoyracing.entity.vehicle.Vehicle.MAX_VALUE_HEALTH;
+import static net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle.MAX_VALUE_HEALTH;
 import net.juniorbl.jtoyracing.core.audio.AudioConfig;
 import net.juniorbl.jtoyracing.core.camera.CameraPositionHandler;
 import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
@@ -13,7 +13,7 @@ import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
 import net.juniorbl.jtoyracing.entity.vehicle.ComputerVehicle;
 import net.juniorbl.jtoyracing.entity.vehicle.Steer;
 import net.juniorbl.jtoyracing.entity.vehicle.Traction;
-import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
+import net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle;
 import net.juniorbl.jtoyracing.enums.GridPosition;
 import net.juniorbl.jtoyracing.util.StateUtil;
 
@@ -34,94 +34,40 @@ import com.jmex.physics.util.SimplePhysicsGame;
  */
 public final class JToyRacing extends SimplePhysicsGame implements ChronometerObserver, HealthObserver {
 
-	/**
-	 * Direction of left steer.
-	 */
 	private static final int LEFT_STEER_DIRECTION = -100;
 
-	/**
-	 * Direction of right steer.
-	 */
 	private static final int RIGHT_STEER_DIRECTION = 100;
 
-	/**
-	 * Velocity of the forward traction.
-	 */
 	private static final int FORWARD_TRACTION_VELOCITY = 50;
 
-	/**
-	 * Velocity of the backward traction.
-	 */
 	private static final int BACKWARD_TRACTION_VELOCITY = -50;
 
-	/**
-	 * Amount of seconds that a vehicle has to stop when its health ends.
-	 */
 	private static final int WAIT_SECONDS = 3;
 
-	/**
-	 * Location of the light.
-	 */
 	private static final Vector3f LIGHT_LOCATION = new Vector3f(0, 40, 0);
 
-	/**
-	 * Location of the camera.
-	 */
 	private static final Vector3f CAMERA_LOCATION = new Vector3f(-40, 0, 163);
 
-	/**
-	 * Normal gravity, uses the Y axis.
-	 */
 	private static final Vector3f NORMAL_GRAVITY = new Vector3f(0, -45, 0);
 
-	/**
-	 * Amount of health that will be recharged when a vehicle stops.
-	 */
 	private static final int RECHARGE_HEALTH = 250;
 
-	/**
-	 * A camera that chase a vehicle.
-	 */
 	private VehicleChaseCamera vehicleChaseCamera;
 
-	/**
-	 * Vehicle controlled by the player.
-	 */
-	private Vehicle vehicle;
+	private PlayerVehicle playerVehicle;
 
-	/**
-	 * Vehicle controlled by the computer.
-	 */
 	private ComputerVehicle computerVehicle;
 
-	/**
-	 * First level of the game.
-	 */
 	private KidsRoom kidsRoom;
 
-	/**
-	 * Information displayed on the screen.
-	 */
 	private Info info;
 
-	/**
-	 * Thread which monitors the health of the vehicles.
-	 */
 	private HealthMonitor healthMonitor;
 
-	/**
-	 * Chronometer that runs every time a vehicle stops because lack of health.
-	 */
 	private HealthChronometer healthChronometer;
 
-	/**
-	 * Audio configuration.
-	 */
 	private AudioConfig audio;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void simpleInitGame() {
 		loadUtil();
@@ -136,28 +82,6 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		loadHealthMonitor();
 	}
 
-	private void loadUtil() {
-		StateUtil.setRenderer(display.getRenderer());
-	}
-
-	/**
-	 * Thread to monitor the health of the vehicles.
-	 */
-	private void loadHealthMonitor() {
-		healthMonitor = new HealthMonitor(this);
-		healthMonitor.start();
-	}
-
-	/**
-	 * Loads the audio configuration.
-	 */
-	private void loadAudio() {
-		this.audio = new AudioConfig(cam);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void simpleUpdate() {
 		super.simpleUpdate();
@@ -165,6 +89,19 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		audio.update();
 		updateEngineSounds();
 		updateComputerVehiclePosition();
+	}
+
+	private void loadUtil() {
+		StateUtil.setRenderer(display.getRenderer());
+	}
+
+	private void loadHealthMonitor() {
+		healthMonitor = new HealthMonitor(this);
+		healthMonitor.start();
+	}
+
+	private void loadAudio() {
+		this.audio = new AudioConfig(cam);
 	}
 
 	private void updateComputerVehiclePosition() {
@@ -178,16 +115,16 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void updateEngineSounds() {
-		vehicle.updateEngineSound();
+		playerVehicle.updateEngineSound();
 		computerVehicle.updateEngineSound();
 	}
 
 	public void updateVehiclesHealth() {
 		// When a vehicle reach a checkpoint, its health is recharged
-		if (kidsRoom.isVehicleReachedCheckpoint(vehicle.getWorldBound())) {
-			info.setHealthBarValue(vehicle.rechargeHealth(MAX_VALUE_HEALTH));
+		if (kidsRoom.isVehicleReachedCheckpoint(playerVehicle.getWorldBound())) {
+			info.setHealthBarValue(playerVehicle.rechargeHealth(MAX_VALUE_HEALTH));
 		}
-		info.setHealthBarValue(vehicle.decreaseHealth());
+		info.setHealthBarValue(playerVehicle.decreaseHealth());
 	}
 
 	private void loadVehicles() {
@@ -210,11 +147,11 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void loadPlayerVehicle() {
-		vehicle = new Vehicle(getPhysicsSpace(), ColorRGBA.red);
-		vehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.FIRST));
-	    vehicle.rotateUponItself(-1.6f);
-		vehicle.addObserver(this);
-		rootNode.attachChild(vehicle);
+		playerVehicle = new PlayerVehicle(getPhysicsSpace(), ColorRGBA.red);
+		playerVehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.FIRST));
+	    playerVehicle.rotateUponItself(-1.6f);
+		playerVehicle.addObserver(this);
+		rootNode.attachChild(playerVehicle);
 	}
 
 	private void loadGravitation() {
@@ -236,39 +173,30 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	private void loadKeyboardControllers() {
-		input.addAction(new Traction(vehicle, FORWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
+		input.addAction(new Traction(playerVehicle, FORWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_UP, InputHandler.AXIS_NONE, false);
-		input.addAction(new Traction(vehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
+		input.addAction(new Traction(playerVehicle, BACKWARD_TRACTION_VELOCITY), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_DOWN, InputHandler.AXIS_NONE, false);
-		input.addAction(new Steer(vehicle, LEFT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
+		input.addAction(new Steer(playerVehicle, LEFT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_LEFT, InputHandler.AXIS_NONE, false);
-		input.addAction(new Steer(vehicle, RIGHT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
+		input.addAction(new Steer(playerVehicle, RIGHT_STEER_DIRECTION), InputHandler.DEVICE_KEYBOARD,
 				KeyInput.KEY_RIGHT, InputHandler.AXIS_NONE, false);
 
 		CameraPositionHandler cameraPositionHandler = new CameraPositionHandler(vehicleChaseCamera);
 		input.addAction(cameraPositionHandler, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_V, InputHandler.AXIS_NONE, false);
 	}
 
-	/**
-	 * Loads screen information system.
-	 */
 	private void loadInfo() {
-		info = new Info(display.getRenderer(), vehicle.getHealth());
+		info = new Info(display.getRenderer(), playerVehicle.getHealth());
 		// Use fpsNone node to display the characters.
 		fpsNode.attachChild(info);
 	}
 
-	/**
-	 * Loads the camera which will follow the vehicle.
-	 */
 	private void loadCamera() {
-		vehicleChaseCamera = (VehicleChaseCamera) VehicleChaseCamera.getInstance(cam, vehicle.getChassis());
+		vehicleChaseCamera = (VehicleChaseCamera) VehicleChaseCamera.getInstance(cam, playerVehicle.getChassis());
 		cam.setLocation(CAMERA_LOCATION);
 	}
 
-	/**
-	 * Loads the environment where the race takes place.
-	 */
 	private void loadEnvironment() {
 		loadRoom();
 		loadLight();
@@ -287,42 +215,27 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		rootNode.setRenderState(lightState);
 	}
 
-	/**
-	 * Loads the room, first level of the game.
-	 */
 	private void loadRoom() {
 		kidsRoom = new KidsRoom(getPhysicsSpace(), display.getRenderer());
-		kidsRoom.attachChild(vehicle);
+		kidsRoom.attachChild(playerVehicle);
 		rootNode.attachChild(kidsRoom);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void updateTime(int seconds) {
 		// TODO use internalization
 		info.printMessage("Time left: " + String.valueOf(seconds) + " seconds");
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void timeUP() {
 		info.printMessage(String.valueOf(""));
-		info.setHealthBarValue(vehicle.rechargeHealth(RECHARGE_HEALTH));
+		info.setHealthBarValue(playerVehicle.rechargeHealth(RECHARGE_HEALTH));
 		healthChronometer.stopChronometer();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void updateHealth() {
 		updateVehiclesHealth();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void healthEnded() {
 		//TODO player that wins the challenge at the beginning may win one more second
 		healthChronometer = new HealthChronometer(WAIT_SECONDS);
