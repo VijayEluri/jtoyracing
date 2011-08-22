@@ -1,6 +1,6 @@
 package net.juniorbl.jtoyracing.core;
 
-import static net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle.MAX_VALUE_HEALTH;
+import static net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle.MAX_HEALTH_VALUE;
 import net.juniorbl.jtoyracing.core.audio.AudioConfig;
 import net.juniorbl.jtoyracing.core.camera.CameraPositionHandler;
 import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
@@ -122,7 +122,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	public void updateVehiclesHealth() {
 		// When a vehicle reach a checkpoint, its health is recharged
 		if (kidsRoom.isVehicleReachedCheckpoint(playerVehicle.getWorldBound())) {
-			info.setHealthBarValue(playerVehicle.rechargeHealth(MAX_VALUE_HEALTH));
+			info.setHealthBarValue(playerVehicle.rechargeHealth(MAX_HEALTH_VALUE));
 		}
 		info.setHealthBarValue(playerVehicle.decreaseHealth());
 	}
@@ -237,7 +237,6 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 	}
 
 	public void healthEnded() {
-		//TODO player that wins the challenge at the beginning may win one more second
 		healthChronometer = new HealthChronometer(WAIT_SECONDS);
 		healthChronometer.addObserver(this);
 		healthChronometer.start();

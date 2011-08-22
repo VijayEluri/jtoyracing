@@ -30,11 +30,11 @@ public class PlayerVehicle extends Node implements Health {
 
 	public static final float CHASSIS_MASS = 40;
 
-	public static final int MAX_VALUE_HEALTH = 500;
+	public static final int MAX_HEALTH_VALUE = 500;
 
 	private static final float CHASSIS_COLLISION_BOX_SCALE = 0.5f;
 
-	private static final int MIN_VALUE_HEALTH = 0;
+	private static final int MIN_HEALTH_VALUE = 0;
 
 	private static final long serialVersionUID = 2049305191562715341L;
 
@@ -64,7 +64,7 @@ public class PlayerVehicle extends Node implements Health {
 
 	public PlayerVehicle(PhysicsSpace physicsSpace, ColorRGBA color) {
 		this.physicsSpace = physicsSpace;
-		health = MAX_VALUE_HEALTH;
+		health = MAX_HEALTH_VALUE;
 		createChassis(color);
 		createSuspension();
 		loadEngineSound();
@@ -128,11 +128,6 @@ public class PlayerVehicle extends Node implements Health {
 		if (hasHealth()) {
 			rearSuspension.accelerate(desiredVelocity);
 			frontSuspension.accelerate(desiredVelocity);
-			if (!engineSound.isPlaying()) {
-				engineSound.play();
-			}
-		} else {
-			engineSound.stop();
 		}
 	}
 
@@ -140,16 +135,11 @@ public class PlayerVehicle extends Node implements Health {
 		if (hasHealth()) {
 			rearSuspension.stop();
 			frontSuspension.stop();
-			if (!engineSound.isPlaying()) {
-				engineSound.play();
-			}
-		} else {
-			engineSound.stop();
 		}
 	}
 
 	private boolean hasHealth() {
-		return health > MIN_VALUE_HEALTH;
+		return health > MIN_HEALTH_VALUE;
 	}
 
 	/**

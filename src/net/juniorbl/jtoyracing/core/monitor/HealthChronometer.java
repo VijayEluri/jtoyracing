@@ -3,7 +3,6 @@ package net.juniorbl.jtoyracing.core.monitor;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Chronometer used when a vehicle stops because of lack of health.
  *
@@ -56,15 +55,15 @@ public final class HealthChronometer extends Thread implements Chronometer {
 		chronometerObservers.remove(observadorCronometro);
 	}
 
-	public void notifyObserversUpdateTime(int tempo) {
-		for (ChronometerObserver observadorCronometro : chronometerObservers) {
-			observadorCronometro.updateTime(tempo);
+	public void notifyObserversUpdateTime(int seconds) {
+		for (ChronometerObserver chronometerObserver : chronometerObservers) {
+			chronometerObserver.updateTime(seconds);
 		}
 	}
 
 	public void notifyObserversTimeUP() {
-		for (ChronometerObserver observadorCronometro : chronometerObservers) {
-			observadorCronometro.timeUP();
+		for (ChronometerObserver chronometerObserver : chronometerObservers) {
+			chronometerObserver.timeUP();
 		}
 	}
 }

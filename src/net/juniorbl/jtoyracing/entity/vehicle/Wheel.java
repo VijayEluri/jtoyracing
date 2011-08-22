@@ -31,6 +31,8 @@ public class Wheel extends Node {
 
 	private static final float TRACTION_ACCELERATION = 150;
 
+	private static final float TRACTION_BREAK_REVERSE_ACCELERATION = 250;
+
 	private static final float STEER_ACCELERATION = 30;
 
 	private static final float MAX_STEER_ROTATION = 0.3f;
@@ -92,6 +94,12 @@ public class Wheel extends Node {
 	}
 
 	public final void accelerate(float desiredVelocity) {
+		boolean breakOrReverse = desiredVelocity < 0;
+		if (breakOrReverse) {
+			tractionAxis.setAvailableAcceleration(TRACTION_BREAK_REVERSE_ACCELERATION);
+		} else {
+			tractionAxis.setAvailableAcceleration(TRACTION_ACCELERATION);
+		}
 		tractionAxis.setDesiredVelocity(desiredVelocity);
 	}
 
