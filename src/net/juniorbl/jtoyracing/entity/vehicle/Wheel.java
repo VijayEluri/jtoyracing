@@ -57,7 +57,7 @@ public class Wheel extends Node {
 		PhysicsSphere tire = wheel.createSphere("tire");
 		tire.setLocalScale(TIRE_SCALE);
 		wheel.generatePhysicsGeometry();
-		wheel.attachChild(ModelUtil.convertModelSimpleObjToJME(ResourcesPath.MODELS_PATH + "obj/whell.obj"));
+		wheel.attachChild(ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/whell.obj"));
 		wheel.setMass(MASS);
 		wheel.setMaterial(Material.RUBBER);
 		wheel.setLocalScale(WHEEL_SCALE);

@@ -22,7 +22,7 @@ import com.jmex.terrain.TerrainBlock;
 import com.jmex.terrain.util.MidPointHeightMap;
 
 /**
- * A kid's room. First level of the game.
+ * A room, first level of the game.
  *
  * @version 1.0 Aug 11, 2007
  * @author Carlos Luz Junior
@@ -114,6 +114,8 @@ public class KidsRoom extends Node {
 		Quad backWall = new Quad("backWall", ROOM_WIDTH, ROOM_HEIGHT);
 		backWall.setLocalTranslation(new Vector3f(0, getFloorHeight() + 50, 81));
 		backWall.setLocalRotation(ModelUtil.calculateRotation(90));
+		String backWallTexture = "back-wall-texture";
+		loadWallTexture(backWall, backWallTexture);
 		this.attachChild(backWall);
 	}
 
@@ -144,6 +146,17 @@ public class KidsRoom extends Node {
 		wall.setRenderState(wallTextureState);
 	}
 
+	private void createRoomObjects() {
+		createBed();
+		createDesk();
+		createComputer();
+		createChair();
+		createLegoDoll();
+		createTV();
+		createTable();
+		createShelf();
+	}
+
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {
 		return raceTrack.isVehicleReachedCheckpoint(vehicleBoundingVolume);
 	}
@@ -153,44 +166,36 @@ public class KidsRoom extends Node {
 	}
 
 	private void createLegoDoll() {
-		StaticPhysicsNode legoDoll = physicsSpace.createStaticNode();
-		legoDoll.setLocalTranslation(new Vector3f(200, getFloorHeight() + 3.9f, 30));
-		legoDoll.attachChild(ModelUtil.convertMultipleModelToJME(
-				ResourcesPath.MODELS_PATH + "obj/legoDoll.obj"));
 		final float legoDollScale = 2.5f;
-		legoDoll.setLocalScale(legoDollScale);
+		StaticPhysicsNode legoDoll = loadObjectModel(
+				new Vector3f(200, getFloorHeight() + 3.9f, 30), "obj/legoDoll.obj", legoDollScale);
 		this.attachChild(legoDoll);
 	}
 
-	private void createRoomObjects() {
-		createBed();
-		createDesk();
-		createComputer();
-		createChair();
-		createLegoDoll();
-		createTV();
-		createTable();
+	private void createShelf() {
+		final float shelfScale = 7;
+		StaticPhysicsNode shelf = loadObjectModel(
+				new Vector3f(5, getFloorHeight() + 35, 80), "obj/shelf.obj", shelfScale);
+		this.attachChild(shelf);
 	}
 
 	private void createBed() {
-		StaticPhysicsNode bed = physicsSpace.createStaticNode();
-		bed.setLocalTranslation(new Vector3f(235, getFloorHeight(), 130));
-		bed.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/bed.obj"));
 		final float bedScale = 0.4f;
-		bed.setLocalScale(bedScale);
+		StaticPhysicsNode bed = loadObjectModel(
+				new Vector3f(235, getFloorHeight(), 130), "obj/bed.obj", bedScale);
 		this.attachChild(bed);
 	}
 
 	private void createDesk() {
 		final float deskScale = 19;
-		StaticPhysicsNode desk = createRoomObject(
+		StaticPhysicsNode desk = loadObjectModel(
 				new Vector3f(80, getFloorHeight(), 20.5f), "obj/desk.obj", deskScale);
 		this.attachChild(desk);
 	}
 
 	private void createChair() {
 		final float chairScale = 17;
-		StaticPhysicsNode chair = createRoomObject(
+		StaticPhysicsNode chair = loadObjectModel(
 				new Vector3f(80, getFloorHeight(), 50), "obj/chair.obj", chairScale);
 		chair.setLocalRotation(ModelUtil.calculateRotation(90));
 		this.attachChild(chair);
@@ -198,32 +203,30 @@ public class KidsRoom extends Node {
 
 	private void createComputer() {
 		final float computerScale = 1.5f;
-		StaticPhysicsNode computer = createRoomObject(
+		StaticPhysicsNode computer = loadObjectModel(
 				new Vector3f(80, getFloorHeight() + 24, 40), "obj/computer.obj", computerScale);
 		this.attachChild(computer);
 	}
 
 	private void createTV() {
 		final float tvScale = 5;
-		StaticPhysicsNode tv = createRoomObject(
+		StaticPhysicsNode tv = loadObjectModel(
 				new Vector3f(230, getFloorHeight() + 7, 10), "obj/TV.obj", tvScale);
 		this.attachChild(tv);
 	}
 
 	private void createTable() {
-		StaticPhysicsNode table = physicsSpace.createStaticNode();
-		table.setLocalTranslation(new Vector3f(230, getFloorHeight(), 15));
-		table.attachChild(ModelUtil.convertModelSimpleObjToJME(ResourcesPath.MODELS_PATH + "obj/table.obj"));
 		final float tableScale = 10;
-		table.setLocalScale(tableScale);
+		StaticPhysicsNode table = loadObjectModel(
+				new Vector3f(230, getFloorHeight(), 15), "obj/table.obj", tableScale);
 		this.attachChild(table);
 	}
 
-	private StaticPhysicsNode createRoomObject(Vector3f objectTranslation, String modelPath, Float objectScale) {
+	private StaticPhysicsNode loadObjectModel(Vector3f objectTranslation, String modelPath, Float objectScale) {
 		StaticPhysicsNode object = physicsSpace.createStaticNode();
 		object.setLocalTranslation(objectTranslation);
-		object.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + modelPath));
 		object.setLocalScale(objectScale);
+		object.attachChild(ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + modelPath));
 		return object;
 	}
 

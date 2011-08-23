@@ -9,9 +9,7 @@ import com.jme.bounding.BoundingBox;
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.renderer.ColorRGBA;
-import com.jme.scene.Node;
-import com.jme.scene.TriMesh;
+import com.jme.scene.Spatial;
 import com.jme.util.export.binary.BinaryImporter;
 import com.jmex.model.XMLparser.Converters.ObjToJme;
 
@@ -28,10 +26,7 @@ public final class ModelUtil {
 	 */
 	private ModelUtil() { }
 
-	/**
-	 * Converts a OBJ model into JME model according to a given path.
-	 */
-	private static ByteArrayOutputStream convertModelObjToJME(String path) {
+	private static ByteArrayOutputStream convertOBJModelToJME(String path) {
 		ObjToJme converter = new ObjToJme();
 		ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 		try {
@@ -41,45 +36,22 @@ public final class ModelUtil {
 			converter.setProperty("texdir", objFile);
 			converter.convert(objFile.openStream(), byteArrayOS);
 		} catch (IOException e) {
-			//TODO handle exception
+			//TODO throw a business checked exception
 			throw new Error(e);
 		}
 		return byteArrayOS;
 	}
 
-	/**
-	 * Converts a simple OBJ model into JME model according to a given path.
-	 */
-	public static TriMesh convertModelSimpleObjToJME(String path) {
-		TriMesh model = null;
+	public static Spatial convertOBJToStatial(String path) {
+		Spatial model = null;
 		try {
-			ByteArrayOutputStream byteArrayOS = convertModelObjToJME(path);
-			model = (TriMesh) BinaryImporter.getInstance().load(
-					new ByteArrayInputStream(byteArrayOS.toByteArray()));
-			model.setModelBound(new BoundingBox());
-			model.updateModelBound();
-			//FIXME temporary
-			model.setDefaultColor(ColorRGBA.black);
-		} catch (IOException e) {
-			//TODO handle exception
-			throw new Error(e);
-		}
-		return model;
-	}
-
-	/**
-	 * Converts a multiple OBJ model into JME model according to a given path.
-	 */
-	public static Node convertMultipleModelToJME(String path) {
-		Node model = null;
-		try {
-			ByteArrayOutputStream byteArrayOS = convertModelObjToJME(path);
-			model = (Node) BinaryImporter.getInstance().load(
+			ByteArrayOutputStream byteArrayOS = convertOBJModelToJME(path);
+			model = (Spatial) BinaryImporter.getInstance().load(
 					new ByteArrayInputStream(byteArrayOS.toByteArray()));
 			model.setModelBound(new BoundingBox());
 			model.updateModelBound();
 		} catch (IOException e) {
-			//TODO handle exception
+			//TODO throw a business checked exception
 			throw new Error(e);
 		}
 		return model;

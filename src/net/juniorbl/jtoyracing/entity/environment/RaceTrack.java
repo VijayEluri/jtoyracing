@@ -45,7 +45,7 @@ public class RaceTrack extends Node {
 		track = physicsSpace.createStaticNode();
 		track.setLocalTranslation(trackLocation);
 		track.setLocalScale(1f);
-		track.attachChild(ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/raceTrack.obj"));
+		track.attachChild(ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/raceTrack.obj"));
 		track.generatePhysicsGeometry(true);
 		track.setMaterial(Material.IRON);
 		this.attachChild(track);
@@ -69,8 +69,7 @@ public class RaceTrack extends Node {
 		StaticPhysicsNode bendThreeCheckPoint = physicsSpace.createStaticNode();
 		bendThreeCheckPoint.setLocalTranslation(checkPointsLocation);
 		bendThreeCheckPoint.attachChild(
-				ModelUtil.convertModelSimpleObjToJME(
-						ResourcesPath.MODELS_PATH + "obj/bendThreeCheckpoint.obj"));
+				ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/bendThreeCheckpoint.obj"));
 		configureCheckPoint(bendThreeCheckPoint);
 		return bendThreeCheckPoint;
 	}
@@ -79,8 +78,7 @@ public class RaceTrack extends Node {
 		StaticPhysicsNode startCheckPoint = physicsSpace.createStaticNode();
 		startCheckPoint.setLocalTranslation(checkPointsLocation);
 		startCheckPoint.attachChild(
-				ModelUtil.convertModelSimpleObjToJME(
-						ResourcesPath.MODELS_PATH + "obj/startCheckPoint.obj"));
+				ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/startCheckPoint.obj"));
 		configureCheckPoint(startCheckPoint);
 		return startCheckPoint;
 	}

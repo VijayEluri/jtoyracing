@@ -90,10 +90,10 @@ public class PlayerVehicle extends Node implements Health {
 	private void applyColor(ColorRGBA color) {
 		if (ColorRGBA.red.equals(color)) {
 			chassis.attachChild(
-					ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/redTruck.obj"));
+					ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/redTruck.obj"));
 		} else if (ColorRGBA.blue.equals(color)) {
 			chassis.attachChild(
-					ModelUtil.convertMultipleModelToJME(ResourcesPath.MODELS_PATH + "obj/blueTruck.obj"));
+					ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/blueTruck.obj"));
 		}
 	}
 
