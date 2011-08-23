@@ -3,15 +3,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+	<script src="js/galleria/galleria-1.2.5.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<title>juniorbl/jtoyracing @ GitHub</title>
-	
+	<title>juniorbl/jtoyracing @ GitHub</title>	
 	<style type="text/css">
 		body {
   		margin-top: 1.0em;
   		background-color: #fac166;
-		  font-family: "Helvetica,Arial,FreeSans";
+		font-family: "Helvetica,Arial,FreeSans";
   		color: #000000;
     }
     #container {
@@ -29,8 +29,7 @@
 		pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
+	</style>	
 </head>
 <script type="text/javascript">
 
@@ -53,19 +52,32 @@
 		<div class="description">
 		  Racing game with toys.
 		</div>
+		<h2>Screenshots</h2>
+		<div id="gallery">
+			<img src="images/v02/v02s1.png">
+			<img src="images/v02/v02s2.png">
+			<img src="images/v02/v02s3.png">
+			<img src="images/v02/v02s4.png">
+			<img src="images/v02/v02s5.png">
+			<img src="images/v02/v02s6.png">
+			<img src="images/v02/v02s7.png">
+			<img src="images/v02/v02s8.png">
+        </div>
+        <script>
+            Galleria.loadTheme('js/galleria/themes/classic/galleria.classic.min.js');
+            $("#gallery").galleria({
+                width: 960,
+                height: 600
+            });
+        </script>
+	</p><br/>
 	<h2>Overview</h2>
 	<p>
-		JToyRacing is a game demo that intends to use toys as vehicles to compete in different parts of a house. Although it doesn't have objectives at the moment, it is playable. There are two checkpoints in the race track that restore the vehicle's health:
+		JToyRacing is a game demo that intends to use toys as vehicles to compete in different parts of a house. Although it doesn't have objectives at the moment, it is playable. There is one environment where the race takes place and one vehicle available. There are two checkpoints in the race track that restore the vehicle's health:
 		<br/><br/>
 		<img src="images/checkpoints.png" alt="The checkpoints of the game" border="0" />
 		<img src="images/health.png" alt="Vehicle's health" border="0" />
 		<br/><br/>
-		There is one environment where the race takes place and one vehicle available. The environment is a children's room with some toys and the vehicle is a red truck:
-		<br/><br/>
-		<img src="images/truck.png" alt="The vehicle of the game" border="0" />
-		<img src="images/room.png" alt="The environment where the race takes place" border="0" />
-	</p>
-	<br/>
 	<h2>Authors</h2>
 	<p>
 		Carlos Luz Junior (juniorbl@gmail.com / <a href="http://github.com/juniorbl" target="_blank">juniorbl</a>)
