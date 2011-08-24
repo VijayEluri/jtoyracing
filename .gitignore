@@ -3,6 +3,7 @@ debug.txt
 .project
 .settings
 .metadata
+.checkstyle
 dist/*
 bin/*
 *.blend1
