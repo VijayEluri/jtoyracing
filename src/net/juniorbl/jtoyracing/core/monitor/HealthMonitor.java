@@ -9,9 +9,7 @@ import net.juniorbl.jtoyracing.core.JToyRacing;
  * @author Carlos Luz Junior
  */
 public final class HealthMonitor extends Thread {
-
 	private static final int ONE_SECOND = 1000;
-
 	private JToyRacing jToyRacing;
 
 	public HealthMonitor(JToyRacing jToyRacing) {

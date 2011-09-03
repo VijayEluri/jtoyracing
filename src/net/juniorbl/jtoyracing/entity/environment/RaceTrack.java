@@ -22,26 +22,23 @@ import com.jmex.physics.material.Material;
  * @author Carlos Luz Junior
  */
 public class RaceTrack extends Node {
-
 	public static final float VEHICLE_X_LOCATION = 28.2f;
-
 	private static final int X_LOCATION_FIRST_GRID_POSITION = -50;
-
 	private static final int X_LOCATION_SECOND_GRID_POSITION = -40;
-
 	private static final long serialVersionUID = 8801407867521059306L;
-
 	private StaticPhysicsNode track;
-
 	private List<StaticPhysicsNode> checkPoints;
+	private Vector3f trackLocation;
+	private PhysicsSpace physicsSpace;
 
 	public RaceTrack(PhysicsSpace physicsSpace, Float floorHeight) {
-		Vector3f trackLocation = new Vector3f(20, floorHeight, 55);
-		createTrack(physicsSpace, trackLocation);
-		createCheckPoints(physicsSpace, trackLocation);
+		trackLocation = new Vector3f(20, floorHeight, 55);
+		this.physicsSpace = physicsSpace;
+		createTrack(trackLocation);
+		createCheckPoints(trackLocation);
 	}
 
-	private void createTrack(PhysicsSpace physicsSpace, Vector3f trackLocation) {
+	private void createTrack(Vector3f trackLocation) {
 		track = physicsSpace.createStaticNode();
 		track.setLocalTranslation(trackLocation);
 		track.setLocalScale(1f);
@@ -55,38 +52,24 @@ public class RaceTrack extends Node {
 	 * Creates the checkpoints of the track. Checkpoints are some locations around a race track
 	 * that recharge the health of the vehicles.
 	 */
-	private void createCheckPoints(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
+	private void createCheckPoints(Vector3f checkPointsLocation) {
 		checkPoints = new ArrayList<StaticPhysicsNode>();
-		StaticPhysicsNode bendThreeCheckPoint = createBendThreeCheckpoint(physicsSpace, checkPointsLocation);
+		StaticPhysicsNode bendThreeCheckPoint = loadCheckpointModel("obj/bendThreeCheckpoint.obj");
 		checkPoints.add(bendThreeCheckPoint);
 		this.attachChild(bendThreeCheckPoint);
-		StaticPhysicsNode startCheckPoint = createStartCheckPoint(physicsSpace, checkPointsLocation);
+		StaticPhysicsNode startCheckPoint = loadCheckpointModel("obj/startCheckPoint.obj");
 		checkPoints.add(startCheckPoint);
 		this.attachChild(startCheckPoint);
 	}
 
-	private StaticPhysicsNode createBendThreeCheckpoint(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
-		StaticPhysicsNode bendThreeCheckPoint = physicsSpace.createStaticNode();
-		bendThreeCheckPoint.setLocalTranslation(checkPointsLocation);
-		bendThreeCheckPoint.attachChild(
-				ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/bendThreeCheckpoint.obj"));
-		configureCheckPoint(bendThreeCheckPoint);
-		return bendThreeCheckPoint;
-	}
-
-	private StaticPhysicsNode createStartCheckPoint(PhysicsSpace physicsSpace, Vector3f checkPointsLocation) {
-		StaticPhysicsNode startCheckPoint = physicsSpace.createStaticNode();
-		startCheckPoint.setLocalTranslation(checkPointsLocation);
-		startCheckPoint.attachChild(
-				ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + "obj/startCheckPoint.obj"));
-		configureCheckPoint(startCheckPoint);
-		return startCheckPoint;
-	}
-
-	private void configureCheckPoint(StaticPhysicsNode checkPoint) {
+	private StaticPhysicsNode loadCheckpointModel(String modelPath) {
+		StaticPhysicsNode checkPoint = physicsSpace.createStaticNode();
+		checkPoint.setLocalTranslation(trackLocation);
+		checkPoint.attachChild(ModelUtil.convertOBJToStatial(ResourcesPath.MODELS_PATH + modelPath));
 		checkPoint.setLocalScale(1f);
 		checkPoint.setMaterial(Material.GHOST);
 		StateUtil.makeTransparent(checkPoint);
+		return checkPoint;
 	}
 
 	public final boolean isVehicleReachedCheckpoint(BoundingVolume vehicleBoundingVolume) {

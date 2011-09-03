@@ -1,8 +1,6 @@
 package net.juniorbl.jtoyracing.enums;
 
 /**
- * Paths of the resources.
- *
  * @version 1.0 Jun 22, 2007
  * @author Carlos Luz Junior
  */

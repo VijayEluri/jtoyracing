@@ -1,6 +1,5 @@
 package net.juniorbl.jtoyracing.core.camera;
 
-
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;
 
@@ -11,7 +10,6 @@ import com.jme.input.action.InputActionInterface;
  * @author Carlos Luz Junior
  */
 public class CameraPositionHandler implements InputActionInterface {
-
 	private VehicleChaseCamera vehicleChaseCamera;
 
 	public CameraPositionHandler(VehicleChaseCamera chaseCamera) {

@@ -20,27 +20,16 @@ import com.jmex.physics.material.Material;
  * @author Carlos Luz Junior
  */
 public class Wheel extends Node {
-
 	private static final long serialVersionUID = 8702035354026675358L;
-
 	private static final float TIRE_SCALE = 1.5f;
-
 	private static final float WHEEL_SCALE = .4f;
-
 	private static final float MASS = 4;
-
 	private static final float TRACTION_ACCELERATION = 150;
-
 	private static final float TRACTION_BREAK_REVERSE_ACCELERATION = 250;
-
 	private static final float STEER_ACCELERATION = 30;
-
 	private static final float MAX_STEER_ROTATION = 0.3f;
-
 	private DynamicPhysicsNode wheel;
-
 	private RotationalJointAxis tractionAxis;
-
 	private RotationalJointAxis steerAxis;
 
 	public Wheel(DynamicPhysicsNode wheelBase, Vector3f location) {

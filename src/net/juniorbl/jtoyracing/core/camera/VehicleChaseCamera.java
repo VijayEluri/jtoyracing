@@ -15,11 +15,8 @@ import com.jme.scene.Spatial;
  * @author Carlos Luz Junior
  */
 public final class VehicleChaseCamera extends ChaseCamera {
-
 	private static final int FAR_DISTANCE = 50;
-
 	private static final int CLOSE_DISTANCE = 30;
-
 	private static ChaseCamera vehicleChaseCamera;
 
 	private VehicleChaseCamera(Camera camera, Spatial vehicleToFollow, HashMap properties) {

@@ -9,37 +9,24 @@ import com.jmex.physics.TranslationalJointAxis;
 import com.jmex.physics.material.Material;
 
 /**
- * Suspension of a car.
+ * Suspension of a vehicle.
  *
  * @version 1.0 Sep 3, 2007
  * @author Carlos Luz Junior
  */
 public class Suspension extends Node {
-
 	private static final long serialVersionUID = 160713063828231761L;
-
 	private static final float WHEEL_BASE_SCALE = .1f;
-
 	private static final Vector3f RIGHT_WHEEL_LOCATION = new Vector3f(0, 0, -2);
-
 	private static final Vector3f LEFT_WHEEL_LOCATION = new Vector3f(0, 0, 2);
-
 	private static final float MASS = 7.5f;
-
 	private static final float MAX_SPRING_DISLOCATION = 0.01f;
-
 	private static final float SPRING_ACCELERATION = 1;
-
 	private static final float SPRING_VELOCITY = -15;
-
 	private static final Vector3f LEFT_WHEEL_BASE_LOCATION = new Vector3f(0, .9f, -.3f);
-
 	private static final Vector3f RIGHT_WHEEL_BASE_LOCATION = new Vector3f(0, -.9f, -1.3f);
-
 	private Wheel leftWheel;
-
 	private Wheel rightWheel;
-
 	private PhysicsSpace physicsSpace;
 
 	public Suspension(PhysicsSpace physicsSpace, DynamicPhysicsNode chassis, Vector3f location) {

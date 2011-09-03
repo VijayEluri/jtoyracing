@@ -53,14 +53,14 @@ public class VehicleTest {
 
 	@Test
 	public void testDecreaseHealth() {
-		PlayerVehicle vehicle = new PlayerVehicle(physicsSpace, ColorRGBA.blue);
+		Vehicle vehicle = new Vehicle(physicsSpace, ColorRGBA.blue);
 		vehicle.decreaseHealth();
 		assertEquals(vehicle.getHealth(), 475);
 	}
 
 	@Test
 	public void testRechargeHealth() {
-		PlayerVehicle vehicle = new PlayerVehicle(physicsSpace, ColorRGBA.blue);
+		Vehicle vehicle = new Vehicle(physicsSpace, ColorRGBA.blue);
 		vehicle.decreaseHealth();
 		vehicle.rechargeHealth(250);
 		assertEquals(vehicle.getHealth(), 250);

@@ -10,12 +10,10 @@ import com.jme.input.action.InputActionInterface;
  * @author Carlos Luz Junior
  */
 public class Traction implements InputActionInterface {
-
-	private PlayerVehicle vehicle;
-
+	private Vehicle vehicle;
 	private float velocity;
 
-	public Traction(PlayerVehicle vehicle, float velocity) {
+	public Traction(Vehicle vehicle, float velocity) {
 		this.vehicle = vehicle;
 		this.velocity = velocity;
 	}

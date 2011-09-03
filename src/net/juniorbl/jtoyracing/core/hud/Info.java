@@ -26,43 +26,24 @@ import com.jme.util.geom.BufferUtils;
  * @author Carlos Luz Junior
  */
 public class Info extends Node {
-
 	private static final long serialVersionUID = -7326797374588827635L;
-
 	private static final float HEALTH_SYMBOL_HEIGHT = 40f;
-
 	private static final float HEALTH_SYMBOL_WIDTH = 40f;
-
 	private static final Vector3f TEXT_INFO_LOCATION = new Vector3f(0, 85, 0);
-
 	private static final Vector3f HEALTH_BAR_LOCATION = new Vector3f(80, 65, 0);
-
 	private static final int BAR_BORDER_WIDTH = 96;
-
 	private static final int BAR_BORDER_HEIGHT = 13;
-
 	private static final int HEALTH_BAR_WIDTH = 94;
-
 	private static final int HEALTH_BAR_HEIGHT = 11;
-
 	private static final Vector3f HEALTH_SYMBOL_LOCATION = new Vector3f(25, 55, 0);
-
 	private static final int BAR_FIRST_PIXEL = 53;
-
 	private static final int BAR_LAST_PIXEL = 63;
-
 	private Quad healthSymbol;
-
 	private Quad barBorders;
-
 	private Quad healthBar;
-
 	private Text textInfo;
-
 	private Node healthBarNode;
-
 	private int maxHealthBarValue;
-
 	private int healthBarTextureHeight;
 
 	/**

@@ -12,13 +12,9 @@ import java.util.List;
  * @author Carlos Luz Junior
  */
 public final class HealthChronometer extends Thread implements Chronometer {
-
 	private static final int ONE_SECOND = 1000;
-
 	private boolean stop;
-
 	private int waitSeconds;
-
 	private List<ChronometerObserver> chronometerObservers = new ArrayList<ChronometerObserver>();
 
 	public HealthChronometer(int seconds) {

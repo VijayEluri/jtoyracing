@@ -13,7 +13,6 @@ import com.jme.scene.state.MaterialState;
  * @author Carlos Luz Junior
  */
 public final class StateUtil {
-
 	private static Renderer renderer;
 
 	/**

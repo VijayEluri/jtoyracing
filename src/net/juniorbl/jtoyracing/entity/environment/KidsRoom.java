@@ -28,27 +28,16 @@ import com.jmex.terrain.util.MidPointHeightMap;
  * @author Carlos Luz Junior
  */
 public class KidsRoom extends Node {
-
 	private static final int ROOM_WIDTH = 162;
-
 	private static final int ROOM_HEIGHT = 100;
-
 	private static final int ROOM_LENGTH = 279;
-
 	private static final long serialVersionUID = -4018480325870153949L;
-
 	private static final Vector3f FLOOR_TEXTURE_SCALE = new Vector3f(2f, 2f, 2f);
-
 	private static final Vector3f FLOOR_SIZE = new Vector3f(9, 0, 5.2f);
-
 	private static final Vector3f LOCATION = new Vector3f(-66, -30, 28);
-
 	private TerrainBlock floorTerrainBlock;
-
 	private RaceTrack raceTrack;
-
 	private Renderer renderer;
-
 	private PhysicsSpace physicsSpace;
 
 	public KidsRoom(PhysicsSpace physicsSpace, Renderer renderer) {
@@ -62,13 +51,20 @@ public class KidsRoom extends Node {
 	}
 
 	private void createFloor() {
+		createTerrainBlock();
+		createFloorNode();
+	}
+
+	private void createTerrainBlock() {
 		MidPointHeightMap mapHeight = new MidPointHeightMap(32, 5f);
 		floorTerrainBlock = new TerrainBlock("terrain", mapHeight.getSize(),
 				FLOOR_SIZE, mapHeight.getHeightMap(),
 				new Vector3f(0, 0, 0), false);
 		floorTerrainBlock.setModelBound(new BoundingBox());
 		floorTerrainBlock.updateModelBound();
+	}
 
+	private void createFloorNode() {
 		StaticPhysicsNode floorNode = physicsSpace.createStaticNode();
 		floorNode.attachChild(floorTerrainBlock);
 		floorNode.generatePhysicsGeometry(true);

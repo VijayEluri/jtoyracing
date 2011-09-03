@@ -11,9 +11,7 @@ import com.jmex.audio.AudioTrack;
  * @author Carlos Luz Junior
  */
 public final class AudioConfig {
-
 	private static final float SOUND_EFFECT_VOLUME = 0.1f;
-
 	private AudioSystem audioSystem;
 
 	public AudioConfig(Camera camera) {

@@ -1,6 +1,6 @@
 package net.juniorbl.jtoyracing.core;
 
-import static net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle.MAX_HEALTH_VALUE;
+import static net.juniorbl.jtoyracing.entity.vehicle.Vehicle.MAX_HEALTH_VALUE;
 import net.juniorbl.jtoyracing.core.audio.AudioConfig;
 import net.juniorbl.jtoyracing.core.camera.CameraPositionHandler;
 import net.juniorbl.jtoyracing.core.camera.VehicleChaseCamera;
@@ -13,7 +13,7 @@ import net.juniorbl.jtoyracing.entity.environment.KidsRoom;
 import net.juniorbl.jtoyracing.entity.vehicle.ComputerVehicle;
 import net.juniorbl.jtoyracing.entity.vehicle.Steer;
 import net.juniorbl.jtoyracing.entity.vehicle.Traction;
-import net.juniorbl.jtoyracing.entity.vehicle.PlayerVehicle;
+import net.juniorbl.jtoyracing.entity.vehicle.Vehicle;
 import net.juniorbl.jtoyracing.enums.GridPosition;
 import net.juniorbl.jtoyracing.util.StateUtil;
 
@@ -33,40 +33,29 @@ import com.jmex.physics.util.SimplePhysicsGame;
  * @author Carlos Luz Junior
  */
 public final class JToyRacing extends SimplePhysicsGame implements ChronometerObserver, HealthObserver {
-
 	private static final int LEFT_STEER_DIRECTION = -100;
-
 	private static final int RIGHT_STEER_DIRECTION = 100;
-
 	private static final int FORWARD_TRACTION_VELOCITY = 50;
-
 	private static final int BACKWARD_TRACTION_VELOCITY = -50;
-
 	private static final int WAIT_SECONDS = 3;
-
 	private static final Vector3f LIGHT_LOCATION = new Vector3f(0, 40, 0);
-
 	private static final Vector3f CAMERA_LOCATION = new Vector3f(-40, 0, 163);
-
 	private static final Vector3f NORMAL_GRAVITY = new Vector3f(0, -45, 0);
-
 	private static final int RECHARGE_HEALTH = 250;
-
 	private VehicleChaseCamera vehicleChaseCamera;
-
-	private PlayerVehicle playerVehicle;
-
+	private Vehicle playerVehicle;
 	private ComputerVehicle computerVehicle;
-
 	private KidsRoom kidsRoom;
-
 	private Info info;
-
 	private HealthMonitor healthMonitor;
-
 	private HealthChronometer healthChronometer;
-
 	private AudioConfig audio;
+
+	public static void main(String[] args) {
+		JToyRacing game = new JToyRacing();
+		game.setDialogBehaviour(NEVER_SHOW_PROPS_DIALOG);
+		game.start();
+	}
 
 	@Override
 	protected void simpleInitGame() {
@@ -109,8 +98,7 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		Vector2f testTarget = new Vector2f(-40, 70);
 		computerVehicle.goTo(testTarget);
 		Vector3f newPosition = new Vector3f(computerVehicle.getCurrentPosition().x,
-				kidsRoom.getGridPosition(GridPosition.SECOND).getY(),
-				computerVehicle.getCurrentPosition().y);
+				kidsRoom.getGridPosition(GridPosition.SECOND).getY(), computerVehicle.getCurrentPosition().y);
 		computerVehicle.setLocalTranslation(newPosition);
 	}
 
@@ -137,17 +125,16 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 		// are in the plane of the ground, the Y axis is the "up" and it's used for gravity
 		// (from "Artificial Intelligence for Games" by Ian Millington).
 		Vector2f initialPosition = new Vector2f(
-				kidsRoom.getGridPosition(GridPosition.SECOND).getX(),
-				kidsRoom.getGridPosition(GridPosition.SECOND).getZ());
+				kidsRoom.getGridPosition(GridPosition.SECOND).getX(), kidsRoom.getGridPosition(GridPosition.SECOND).getZ());
 		computerVehicle = new ComputerVehicle(getPhysicsSpace(), initialPosition, ColorRGBA.blue);
 		computerVehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.SECOND));
-	    computerVehicle.rotateUponItself(-1.6f);
+		computerVehicle.rotateUponItself(-1.6f);
 		computerVehicle.addObserver(this);
 		rootNode.attachChild(computerVehicle);
 	}
 
 	private void loadPlayerVehicle() {
-		playerVehicle = new PlayerVehicle(getPhysicsSpace(), ColorRGBA.red);
+		playerVehicle = new Vehicle(getPhysicsSpace(), ColorRGBA.red);
 		playerVehicle.setLocalTranslation(kidsRoom.getGridPosition(GridPosition.FIRST));
 	    playerVehicle.rotateUponItself(-1.6f);
 		playerVehicle.addObserver(this);
@@ -156,12 +143,6 @@ public final class JToyRacing extends SimplePhysicsGame implements ChronometerOb
 
 	private void loadGravitation() {
 		getPhysicsSpace().setDirectionalGravity(NORMAL_GRAVITY);
-	}
-
-	public static void main(String[] args) {
-		JToyRacing game = new JToyRacing();
-		game.setDialogBehaviour(NEVER_SHOW_PROPS_DIALOG);
-		game.start();
 	}
 
 	private void loadOptimization() {
